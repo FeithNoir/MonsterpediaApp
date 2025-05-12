@@ -1,59 +1,62 @@
-# MonsterpediaApp
+# Monsterpedia 📜👹
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+¡Bienvenido a Monsterpedia! Una enciclopedia digital dedicada al fascinante y diverso mundo de las chicas monstruo. Este proyecto es un prototipo inicial desarrollado con HTML y Tailwind CSS, diseñado para mostrar un concepto visual y funcional de cómo podría ser una enciclopedia de este tipo.
 
-## Development server
+La idea principal es presentar la información de cada chica monstruo de una manera que evoque una enciclopedia antigua o un tablón de anuncios de un investigador de lo oculto, con fichas de perfil y artículos detallados.
 
-To start a local development server, run:
+## ✨ Características del Prototipo
 
-```bash
-ng serve
-```
+*   **Diseño Temático:** Estética inspirada en enciclopedias antiguas, utilizando una paleta de colores terrosos, fuentes serif y efectos visuales como "papel" y "tablones de anuncios".
+*   **Página Única:** Actualmente, toda la información (incluyendo el ejemplo de la Arpía) se presenta en un solo archivo `index.html` para facilitar la visualización del prototipo.
+*   **Ficha de Monstrua Detallada:**
+    *   Imagen de perfil con efecto visual.
+    *   Datos básicos de la especie (clasificación, alineamiento, amenaza, etc.).
+    *   Estadísticas representadas con barras de progreso.
+*   **Artículo Informativo:**
+    *   Secciones dedicadas a la etimología, hábitats, comportamiento, dieta y curiosidades.
+    *   Formato de texto que imita una hoja de papel de investigación.
+*   **Tecnologías:**
+    *   HTML5 semántico.
+    *   Tailwind CSS para un estilizado rápido y personalizable.
+    *   Google Fonts para tipografías específicas.
+*   **Sección de "Otros Especímenes":** Muestra cómo se podrían presentar otras entradas en el futuro.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🖼️ Vista Previa (Conceptual)
 
-## Code scaffolding
+*(Opcional: Si tienes capturas de pantalla, este sería un buen lugar para poner una o dos)*
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Imagina un tablón de anuncios de madera oscura, con varios papeles y pergaminos clavados:
 
-```bash
-ng generate component component-name
-```
+*   Un **cartel de "Se Busca" o perfil** detallando las características y estadísticas de una chica monstruo.
+*   Una **hoja de investigación** adjunta con observaciones detalladas sobre su comportamiento, hábitat y curiosidades.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Cómo Usar este Prototipo
 
-```bash
-ng generate --help
-```
+1.  Clona o descarga este repositorio.
+2.  Abre el archivo `index.html` en tu navegador web preferido.
+3.  ¡Explora el contenido de ejemplo de la Arpía!
 
-## Building
+## 🚀 Posibles Mejoras y Futuras Funcionalidades
 
-To build the project run:
+*   Separar cada chica monstruo en su propia página HTML o componente (si se migra a un framework).
+*   Implementar un sistema de navegación más robusto.
+*   Añadir funcionalidad de búsqueda y filtrado.
+*   Crear una base de datos o archivos JSON para almacenar la información de las monstruas.
+*   Permitir contribuciones de la comunidad.
+*   Optimizar para dispositivos móviles de forma más exhaustiva.
+*   ¡Añadir muchas más chicas monstruo!
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 👤 Autor
 
-## Running unit tests
+Este proyecto fue desarrollado por **Feith Noir**.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+*   **GitHub:** [![GitHub](https://img.shields.io/badge/GitHub-Feith%20Noir-181717?style=for-the-badge&logo=github)](https://github.com/feithnoir)
 
-```bash
-ng test
-```
+## 📄 Licencia
 
-## Running end-to-end tests
+El código puede ser utilizado como referencia o inspiración bajo una licencia de código abierto como [MIT](https://opensource.org/licenses/MIT).
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+¡Gracias por visitar Monsterpedia! Esperamos que este prototipo te inspire.
