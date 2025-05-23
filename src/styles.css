@@ -3,25 +3,19 @@
 
 body {
   font-family: "Crimson Text", serif;
-  /* Fuente serif para el cuerpo principal */
   background-color: #f5e5c3;
-  /* Un color pergamino/papel viejo para el fondo general */
   color: #4a3b31;
-  /* Un marrón oscuro para el texto principal */
   line-height: 1.7;
 }
 
 .font-title-main {
   font-family: "Sorts Mill Goudy", serif;
-  /* Fuente decorativa para títulos grandes */
   color: #5d4037;
-  /* Marrón más oscuro para títulos */
 }
 
 .font-title-section {
   font-family: "Sorts Mill Goudy", serif;
   color: #6d4c41;
-  /* Marrón medio */
 }
 
 .content-wrapper {
@@ -32,7 +26,6 @@ body {
   padding-right: 1rem;
 }
 
-/* Paleta "Enciclopedia Antigua" */
 .text-encyclopedia-title {
   color: #5d4037;
 }
@@ -41,39 +34,24 @@ body {
   color: #8d6e63;
 }
 
-/* Marrón más claro o un sepia */
 .hover\:text-encyclopedia-accent-dark:hover {
   color: #5d4037;
 }
 
-/* --- Estilos Tablón de Anuncios --- */
 .bulletin-board {
   background-color: #8d6e63;
-  /* Fondo tipo corcho o madera oscura */
   border: 10px solid #5d4037;
-  /* Borde grueso tipo marco de madera */
-  border-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%20100%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3Cpattern%20id%3D%22wood-grain%22%20patternUnits%3D%22userSpaceOnUse%22%20width%3D%2250%22%20height%3D%2250%22%3E%3Cpath%20d%3D%22M0%200h50v50H0z%22%20fill%3D%22%23A1887F%22%2F%3E%3Cpath%20d%3D%22M10%200c3%205%20-2%2020%200%2020s8%205%2010%200c-2-5-8-20-10-20zm20%2010c3%205%20-2%2020%200%2020s8%205%2010%200c-2-5-8-20-10-20zM0%2030c3%205%20-2%2020%200%2020s8%205%2010%200c-2-5-8-20-10-20z%22%20fill%3D%22%23795548%22%20stroke%3D%22%235D4037%22%20stroke-width%3D%221%22%20opacity%3D%220.2%22%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23wood-grain)%22%2F%3E%3C%2Fsvg%3E")
-    30 stretch;
-  /* Efecto madera para el borde (puede ser complejo de lograr perfectamente cross-browser solo con CSS) */
   padding: 1.5rem;
-  /* Espacio interior del tablón */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  /* Ligeramente redondeado */
 }
 
 .paper-sheet {
   background-color: #fffdf5;
-  /* Blanco hueso/crema para el papel */
   color: #4a3b31;
-  /* Texto marrón oscuro sobre el papel */
   padding: 1.5rem;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
-  /* Sombra para dar efecto de papel pegado */
   border-radius: 3px;
-  /* Bordes ligeramente doblados */
-  /* Opcional: un borde sutil al papel */
-  /* border: 1px solid #e0d8c7; */
 }
 
 .paper-sheet-profile {
@@ -97,7 +75,6 @@ body {
   width: 12px;
   height: 12px;
   background-color: #78909c;
-  /* Color metálico */
   border-radius: 50%;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
   border: 1px solid #546e7a;
@@ -117,10 +94,8 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Barras de estadísticas con estilo antiguo */
 .stat-bar-bg {
   background-color: #d7ccc8;
-  /* Gris claro/beige */
   border-radius: 2px;
   overflow: hidden;
   height: 1.25rem;
@@ -136,40 +111,29 @@ body {
   font-size: 0.75rem;
   line-height: 1.25rem;
   color: #fffdf5;
-  /* Texto claro sobre la barra */
   font-weight: 600;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-  /* Sombra al texto de la barra */
 }
 
-/* Colores de barras con tonos más apagados/antiguos */
 .stat-bar-strength {
   background-color: #a1887f;
 }
 
-/* Marrón */
 .stat-bar-agility {
   background-color: #81c784;
 }
 
-/* Verde apagado */
 .stat-bar-intellect {
   background-color: #7986cb;
 }
 
-/* Azul índigo apagado */
 .stat-bar-magic {
   background-color: #ba68c8;
 }
 
-/* Púrpura apagado */
 .stat-bar-charm {
   background-color: #f06292;
 }
 
-/* Rosa apagado */
-
-/* Estilos para el contenido del artículo en la "hoja" */
 .article-content h2,
 .article-content h3 {
   font-family: "Sorts Mill Goudy", serif;
@@ -187,7 +151,6 @@ body {
 
 .article-content ul {
   list-style: square;
-  /* Estilo de lista más clásico */
   padding-left: 1.5rem;
   margin-bottom: 1rem;
 }
