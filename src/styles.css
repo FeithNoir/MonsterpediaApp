@@ -176,3 +176,15 @@ body {
   color: #756257;
   margin-top: 0.25rem;
 }
+
+.auth-btn {
+  padding: 0.5rem 0.7rem;
+  font-weight: 600;
+  background-color: #8d6e63;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.auth-btn:hover {
+  background-color: #6d4c41;
+}
