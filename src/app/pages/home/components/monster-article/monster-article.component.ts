@@ -3,6 +3,7 @@ import { IMonsterGirl, IStats } from '../../../../core/interfaces/monster-girl.i
 import { v4 as uuidv4 } from 'uuid';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
+import { IEntry } from '../../../../core/interfaces/entry.interface';
 
 @Component({
   selector: 'pages-monster-article',
@@ -15,6 +16,7 @@ export class MonsterArticleComponent implements OnInit {
   imgUrl: string = './lamia.jpg';
 
   monsterGirl = signal<IMonsterGirl | null>(null);
+  entry = signal<IEntry | null>(null);
   private readonly lamiaArticleMarkdown: string = `
 # Estudio sobre la Lamia
 *Observaciones sobre la Lamia obscura y sus hábitos arcanos.*
@@ -86,11 +88,19 @@ variaciones regionales. Se recomienda cautela al aproximarse a especímenes salv
       threatLevel: 7,
       longevity: 'Varios siglos',
       stats: lamiaStats,
-      tags: ['Lamia', 'Críptida', 'Magia Antigua', 'Serpiente'],
       image: this.imgUrl,
-      entries: articleContent,
     };
 
-    this.monsterGirl.set(lamiaData);
+    const lamiaArticle: IEntry = {
+      id: uuidv4(),
+      title: lamiaData.species,
+      content: articleContent,
+      author: 'System demo',
+      date: new Date(Date.now()),
+      tags: ['Lamia', 'Críptida', 'Magia Antigua', 'Serpiente'],
+      MonsterGirl: lamiaData
+    }
+
+    this.entry.set(lamiaArticle);
   }
 }

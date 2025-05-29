@@ -9,9 +9,7 @@ export interface IMonsterGirl {
   threatLevel: number;
   longevity: string;
   stats: IStats;
-  tags: string[];
   image?: string;
-  entries: string;
 }
 
 export interface IStats {

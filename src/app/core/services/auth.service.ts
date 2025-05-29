@@ -30,7 +30,7 @@ export class AuthService {
   /**
    * Iniciar sesión con email y contraseña
    */
-  login(credentials: ILoginCredentials): Observable<IAuthResponse> {
+  public login(credentials: ILoginCredentials): Observable<IAuthResponse> {
     return from(
       signInWithEmailAndPassword(
         this.auth,
@@ -56,7 +56,7 @@ export class AuthService {
   /**
    * Registrar nuevo usuario
    */
-  register(credentials: IRegisterCredentials): Observable<IAuthResponse> {
+  public register(credentials: IRegisterCredentials): Observable<IAuthResponse> {
     return from(
       createUserWithEmailAndPassword(
         this.auth,
@@ -97,9 +97,36 @@ export class AuthService {
   }
 
   /**
+   * Actualizar el perfil del usuario actual
+   */
+  public updateUserProfile(data: { displayName?: string; photoURL?: string;}): Observable<IAuthResponse> {
+    const currentUser = this.auth.currentUser;
+
+    if (!currentUser) {
+      return throwError(() => ({ success: false, message: 'No hay usuario autenticado', }));
+    }
+
+    return from(updateProfile(currentUser, data)).pipe(
+      switchMap(() => this.reloadUser()),
+            map((user) => ({
+        success: true,
+        message: 'Perfil actualizado exitosamente',
+        user: user ?? undefined,
+      })),
+      catchError((error) => {
+        return throwError(() => ({
+          success: false,
+          message: this.getErrorMessage(error.code),
+          error,
+        }));
+      })
+    );
+  }
+
+  /**
    * Enviar email para restablecer contraseña
    */
-  forgotPassword(email: string): Observable<IAuthResponse> {
+  public forgotPassword(email: string): Observable<IAuthResponse> {
     return from(sendPasswordResetEmail(this.auth, email)).pipe(
       map(() => ({
         success: true,
@@ -118,7 +145,7 @@ export class AuthService {
   /**
    * Renovar token del usuario actual
    */
-  renewUserToken(forceRefresh: boolean = true): Observable<string> {
+  public renewUserToken(forceRefresh: boolean = true): Observable<string> {
     const currentUser = this.auth.currentUser;
 
     if (!currentUser) {
@@ -136,14 +163,14 @@ export class AuthService {
   /**
    * Enviar email de confirmación/verificación
    */
-  sendConfirmationEmail(): Observable<IAuthResponse> {
+  public sendConfirmationEmail(): Observable<IAuthResponse> {
     return this.sendVerificationEmail();
   }
 
   /**
    * Enviar email de verificación al usuario actual
    */
-  sendVerificationEmail(): Observable<IAuthResponse> {
+  public sendVerificationEmail(): Observable<IAuthResponse> {
     const currentUser = this.auth.currentUser;
 
     if (!currentUser) {
@@ -180,14 +207,14 @@ export class AuthService {
   /**
    * Cerrar sesión
    */
-  logout(): Observable<void> {
+  public logout(): Observable<void> {
     return from(signOut(this.auth));
   }
 
   /**
    * Recargar información del usuario actual
    */
-  reloadUser(): Observable<IUser | null> {
+  public reloadUser(): Observable<IUser | null> {
     const currentUser = this.auth.currentUser;
 
     if (!currentUser) {
@@ -210,14 +237,14 @@ export class AuthService {
   /**
    * Obtener el usuario actual
    */
-  getCurrentUser(): IUser | null {
+  public getCurrentUser(): IUser | null {
     return this.currentUserSubject.value;
   }
 
   /**
    * Verificar si el usuario actual tiene el email verificado
    */
-  isEmailVerified(): boolean {
+  public isEmailVerified(): boolean {
     const user = this.getCurrentUser();
     return user ? user.emailVerified : false;
   }
@@ -225,7 +252,7 @@ export class AuthService {
   /**
    * Obtener token del usuario actual
    */
-  getCurrentUserToken(): Observable<string | null> {
+  public getCurrentUserToken(): Observable<string | null> {
     const currentUser = this.auth.currentUser;
 
     if (!currentUser) {

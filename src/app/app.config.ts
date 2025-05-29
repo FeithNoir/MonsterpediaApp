@@ -8,6 +8,7 @@ import { environment } from '../environments/environment.development';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     provideHttpClient(withInterceptors([authInterceptor])),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
 };

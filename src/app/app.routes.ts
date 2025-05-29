@@ -45,6 +45,11 @@ export const routes: Routes = [
     loadComponent: () =>import('./pages/profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
+    path: 'entry',
+    canActivate: [authGuard],
+    loadComponent: () =>import('./pages/entry-editor/entry-editor.component').then((m) => m.EntryEditorComponent),
+  },
+  {
     path: '',
     redirectTo: 'main',
     pathMatch: 'full',

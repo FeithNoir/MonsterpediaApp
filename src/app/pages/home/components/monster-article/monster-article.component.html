@@ -1,22 +1,22 @@
-@if (monsterGirl() != null) {
+@if (entry() != null) {
   <article class="p-4 md:p-6 lg:p-8 bg-encyclopedia-bg text-encyclopedia-text">
       <!-- Header con datos de la interfaz (fuera del Markdown) -->
       <header class="mb-6 text-center">
         <h1 class="font-title-main text-4xl md:text-5xl text-encyclopedia-title mb-2">
-          {{ monsterGirl()!.name }}
+          {{ entry()!.title }}
         </h1>
-        <p class="text-sm text-encyclopedia-accent italic">{{ monsterGirl()!.description }}</p>
+        <p class="text-sm text-encyclopedia-accent italic">{{ entry()!.MonsterGirl.description }}</p>
       </header>
 
       <!-- Contenido del artículo renderizado desde Markdown -->
-      <markdown [data]="monsterGirl()!.entries" ngPreserveWhitespaces />
+      <markdown [data]="entry()!.content" ngPreserveWhitespaces />
 
       <!-- Footer (fuera del Markdown) -->
       <footer class="mt-8 pt-4 border-t border-[#d7ccc8]">
         <div class="mt-3">
           <span class="font-semibold text-sm text-gray-700">Archivado bajo:</span>
           <ng-container>
-              @for (tag of monsterGirl()!.tags; track $index) {
+              @for (tag of entry()!.tags; track $index) {
               <a href="#" (click)="$event.preventDefault()"
                 class="ml-1.5 text-xs bg-[#e0d8c7] hover:bg-[#c8bca8] text-[#5D4037] px-2 py-0.5 rounded-sm transition">
                 {{ tag }}

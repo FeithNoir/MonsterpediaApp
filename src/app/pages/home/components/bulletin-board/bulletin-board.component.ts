@@ -28,8 +28,5 @@ export class BulletinBoardComponent {
     threatLevel: 4,
     longevity: '120-150 ciclos solares',
     stats: this.stats,
-    tags: ['Lamia', 'Criptida', 'Magía antigua'],
-    entries: ''
   }
-
 }

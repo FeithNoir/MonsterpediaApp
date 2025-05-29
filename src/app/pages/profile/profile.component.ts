@@ -9,10 +9,10 @@ import { IUser } from '../../core/interfaces/auth.interface';
   selector: 'pages-profile',
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
-private authService = inject(AuthService);
+  private authService = inject(AuthService);
 
   user = signal<IUser | null>(null);
   displayName = signal<string>('');
@@ -34,17 +34,15 @@ private authService = inject(AuthService);
     const current = this.authService.getCurrentUser();
     if (!current) return;
 
-    // updateProfile(current as any, {
-    //   displayName: this.displayName(),
-    //   photoURL: this.photoURL(),
-    // })
-    //   .then(() => {
-    //     this.authService.reloadUser().subscribe(() => {
-    //       this.message.set('Perfil actualizado exitosamente');
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     this.message.set('Error al actualizar perfil: ' + err.message);
-    //   });
+    const data = {
+      displayName: this.displayName(),
+      photoURL: this.photoURL(),
+    };
+
+    this.authService.updateUserProfile(data).subscribe({
+      next: (res) => this.message.set(res.message),
+      error: (err) =>
+        this.message.set(err.message || 'Error al actualizar perfil'),
+    });
   }
 }
