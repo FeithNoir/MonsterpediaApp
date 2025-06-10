@@ -37,4 +37,10 @@ private authService = inject(AuthService);
       },
     });
   }
+
+  protected goToUrl(url: string):void {
+    if(url != null && url.length > 0) {
+      this.router.navigateByUrl(url);
+    }
+  }
 }

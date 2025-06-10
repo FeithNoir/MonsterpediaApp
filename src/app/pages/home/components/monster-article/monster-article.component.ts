@@ -1,9 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { IMonsterGirl, IStats } from '../../../../core/interfaces/monster-girl.interface';
 import { v4 as uuidv4 } from 'uuid';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
 import { IEntry } from '../../../../core/interfaces/entry.interface';
+import { AuthService } from '../../../../core/services/auth.service';
+import { IUser } from '../../../../core/interfaces/auth.interface';
 
 @Component({
   selector: 'pages-monster-article',
@@ -13,10 +15,13 @@ import { IEntry } from '../../../../core/interfaces/entry.interface';
   styleUrl: './monster-article.component.css',
 })
 export class MonsterArticleComponent implements OnInit {
-  imgUrl: string = './lamia.jpg';
+  private authService = inject(AuthService);
 
-  monsterGirl = signal<IMonsterGirl | null>(null);
-  entry = signal<IEntry | null>(null);
+  protected imgUrl: string = './lamia.jpg';
+  private currentUser: IUser = this.authService.getCurrentUser()!;
+
+  protected monsterGirl = signal<IMonsterGirl | null>(null);
+  protected entry = signal<IEntry | null>(null);
   private readonly lamiaArticleMarkdown: string = `
 # Estudio sobre la Lamia
 *Observaciones sobre la Lamia obscura y sus hábitos arcanos.*
@@ -95,7 +100,7 @@ variaciones regionales. Se recomienda cautela al aproximarse a especímenes salv
       id: uuidv4(),
       title: lamiaData.species,
       content: articleContent,
-      author: 'System demo',
+      author: this.currentUser,
       date: new Date(Date.now()),
       tags: ['Lamia', 'Críptida', 'Magia Antigua', 'Serpiente'],
       MonsterGirl: lamiaData

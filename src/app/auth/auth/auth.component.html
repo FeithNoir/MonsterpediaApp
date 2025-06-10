@@ -34,9 +34,13 @@
       </button>
     </form>
 
-    <div class="mt-4 text-center">
-      <button (click)="toggleMode()" class="text-encyclopedia-accent hover:text-encyclopedia-title">
+    <div class="mt-4 text-center flex flex-col gap-4">
+      <button (click)="toggleMode()" class="primary-btn">
         {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
+      </button>
+
+      <button (click)="goToUrl('reset-password')" class="primary-btn">
+        ¿Olvidaste la contraseña?
       </button>
     </div>
 

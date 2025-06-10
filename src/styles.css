@@ -189,3 +189,18 @@ body {
 .auth-btn:hover {
   background-color: #6d4c41;
 }
+
+.primary-btn {
+  padding: 0.5rem 0.7rem;
+  font-weight: 600;
+  background-color: transparent;
+  color: #5d4037;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary-btn:hover {
+  background-color: #5d4037;
+  color: #fff;
+}

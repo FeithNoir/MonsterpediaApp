@@ -83,4 +83,10 @@ export class AuthComponent {
   protected toggleIcon():void {
     this.isViewingPassword = !this.isViewingPassword;
   }
+
+  protected goToUrl(url: string):void {
+    if(url != null && url.length > 0) {
+      this.router.navigateByUrl(url);
+    }
+  }
 }
