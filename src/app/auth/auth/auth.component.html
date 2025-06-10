@@ -7,61 +7,49 @@
     <form (ngSubmit)="submit()" class="flex flex-col gap-4">
       <div>
         <label class="block font-semibold mb-1 text-encyclopedia-accent">Email</label>
-        <input
-          type="email"
-          class="w-full px-3 py-2 border rounded shadow-inner"
-          required
-          [(ngModel)]="email"
-          name="email"
-        />
+        <input type="email" class="w-full px-3 py-2 border rounded" required [(ngModel)]="email"
+          name="email" />
       </div>
 
       <div>
         <label class="block font-semibold mb-1 text-encyclopedia-accent">Contraseña</label>
-        <input
-          type="password"
-          class="w-full px-3 py-2 border rounded shadow-inner"
-          required
-          [(ngModel)]="password"
-          name="password"
-        />
+        <p-inputgroup>
+          <input pInputText [type]="isViewingPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="Contraseña" [ngModelOptions]="{standalone: true}" class="w-full px-3 py-2 border rounded" />
+          <p-inputgroup-addon>
+            <i [ngClass]=" isViewingPassword ? 'pi pi-eye-slash' : 'pi pi-eye' " class="h-full px-3 py-2 border rounded" (click)="toggleIcon()"></i>
+          </p-inputgroup-addon>
+        </p-inputgroup>
       </div>
 
-      <div *ngIf="mode() === 'register'">
-        <label class="block font-semibold mb-1 text-encyclopedia-accent">Nombre a mostrar</label>
-        <input
-          type="text"
-          class="w-full px-3 py-2 border rounded shadow-inner"
-          [(ngModel)]="displayName"
-          name="displayName"
-        />
-      </div>
+      @if (mode() === 'register') {
+        <div>
+          <label class="block font-semibold mb-1 text-encyclopedia-accent">Nombre a mostrar</label>
+          <input type="text" class="w-full px-3 py-2 border rounded" [(ngModel)]="displayName"
+            name="displayName" />
+        </div>
+      }
 
-      <button
-        type="submit"
-        [disabled]="loading()"
-        class="auth-btn"
-      >
+      <button type="submit" [disabled]="loading()" class="auth-btn">
         {{ loading() ? 'Cargando...' : (mode() === 'login' ? 'Iniciar sesión' : 'Registrarse') }}
       </button>
     </form>
 
     <div class="mt-4 text-center">
-      <button (click)="toggleMode()" class="text-encyclopedia-accent hover:text-encyclopedia-title" >
+      <button (click)="toggleMode()" class="text-encyclopedia-accent hover:text-encyclopedia-title">
         {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
       </button>
     </div>
 
     @if (feedbackMessage()) {
-      <div  class="mt-4 text-green-700 font-semibold">
-        {{ feedbackMessage() }}
-      </div>
+    <div class="mt-4 text-green-700 font-semibold">
+      {{ feedbackMessage() }}
+    </div>
     }
 
     @if (feedbackError()) {
-      <div class="mt-4 text-red-700 font-semibold">
-        {{ feedbackError() }}
-      </div>
+    <div class="mt-4 text-red-700 font-semibold">
+      {{ feedbackError() }}
+    </div>
     }
   </div>
 </div>

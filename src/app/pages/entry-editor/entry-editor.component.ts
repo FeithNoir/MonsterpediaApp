@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { IEntry } from '../../core/interfaces/entry.interface';
 import { EntryService } from '../../core/services/entry.service';
 import { IMonsterGirl } from '../../core/interfaces/monster-girl.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entry-editor',
@@ -16,6 +17,8 @@ import { IMonsterGirl } from '../../core/interfaces/monster-girl.interface';
 export class EntryEditorComponent {
 private fb = inject(FormBuilder);
   private entryService = inject(EntryService);
+  private router = inject(Router);
+
 
   protected initialEntry = input<IEntry | null>(null);
 
@@ -37,7 +40,7 @@ private fb = inject(FormBuilder);
     }
   }
 
-  onSubmit(): void {
+  protected onSubmit(): void {
     if (this.entryForm.invalid) return;
 
     const form = this.entryForm.value;
@@ -78,5 +81,9 @@ private fb = inject(FormBuilder);
         magic: 1,
       },
     };
+  }
+
+  protected goToUrl(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

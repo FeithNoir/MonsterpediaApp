@@ -42,12 +42,26 @@ export const routes: Routes = [
   {
     path: 'perfil',
     canActivate: [authGuard],
-    loadComponent: () =>import('./pages/profile/profile.component').then((m) => m.ProfileComponent),
+    loadComponent: () =>
+      import('./pages/profile/profile.component').then(
+        (m) => m.ProfileComponent
+      ),
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'entry',
     canActivate: [authGuard],
-    loadComponent: () =>import('./pages/entry-editor/entry-editor.component').then((m) => m.EntryEditorComponent),
+    loadComponent: () =>
+      import('./pages/entry-editor/entry-editor.component').then(
+        (m) => m.EntryEditorComponent
+      ),
   },
   {
     path: '',
