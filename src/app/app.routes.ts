@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -37,30 +36,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./auth/reset-password/reset-password.component').then(
         (c) => c.ResetPasswordComponent
-      ),
-  },
-  {
-    path: 'perfil',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./pages/profile/profile.component').then(
-        (m) => m.ProfileComponent
-      ),
-  },
-  {
-    path: 'dashboard',
-    loadComponent: () =>
-      import('./pages/dashboard/dashboard.component').then(
-        (m) => m.DashboardComponent
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'entry',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./pages/entry-editor/entry-editor.component').then(
-        (m) => m.EntryEditorComponent
       ),
   },
   {

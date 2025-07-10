@@ -1,22 +1,63 @@
+:root {
+  /* Colores */
+  --color-background: #f5e5c3;
+  --color-text-dark: #4a3b31;
+  --color-primary: #5d4037;
+  --color-accent: #8d6e63;
+  --color-secondary: #6d4c41;
+  --color-paper-light: #fffdf5;
+  --color-paper-profile: #fdf6e4;
+  --color-border-light: #d7ccc8;
+  --color-border-dark: #bcaaa4;
+  --color-pin: #78909c;
+  --color-pin-border: #546e7a;
+  --color-text-muted: #756257;
+
+  /* Colores de estadísticas */
+  --color-stat-strength: #a1887f;
+  --color-stat-agility: #81c784;
+  --color-stat-intellect: #7986cb;
+  --color-stat-magic: #ba68c8;
+  --color-stat-charm: #f06292;
+
+  /* Fuentes */
+  --font-body: "Crimson Text", serif;
+  --font-title: "Sorts Mill Goudy", serif;
+}
+
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 
 body {
-  font-family: "Crimson Text", serif;
-  background-color: #f5e5c3;
-  color: #4a3b31;
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
   line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+app-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
 }
 
 .font-title-main {
-  font-family: "Sorts Mill Goudy", serif;
-  color: #5d4037;
+  font-family: var(--font-title);
+  color: var(--color-primary);
 }
 
 .font-title-section {
-  font-family: "Sorts Mill Goudy", serif;
-  color: #6d4c41;
+  font-family: var(--font-title);
+  color: var(--color-secondary);
 }
 
 .content-wrapper {
@@ -28,57 +69,53 @@ body {
 }
 
 .text-encyclopedia-title {
-  color: #5d4037;
+  color: var(--color-primary);
 }
 
 .text-encyclopedia-accent {
-  color: #8d6e63;
+  color: var(--color-accent);
 }
 
 .hover\:text-encyclopedia-accent-dark:hover {
-  color: #5d4037;
+  color: var(--color-primary);
 }
 
 .bulletin-board {
-  background-color: #8d6e63;
-  border: 10px solid #5d4037;
+  background-color: var(--color-accent);
+  border: 10px solid var(--color-primary);
   padding: 1.5rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
 
 .paper-sheet {
-  background-color: #fffdf5;
-  color: #4a3b31;
+  background-color: var(--color-paper-light);
+  color: var(--color-text-dark);
   padding: 1.5rem;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
 
 .paper-sheet-profile {
-  background-color: #fdf6e4;
-  /* Un tono ligeramente diferente para el perfil, como un cartel más grueso */
-  color: #4a3b31;
+  background-color: var(--color-paper-profile);
+  color: var(--color-text-dark);
   padding: 1.5rem;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  border: 1px dashed #c8bca8;
-  /* Borde punteado como si estuviera "clavado" */
+  border: 1px dashed var(--color-border-dark);
   position: relative;
-  /* Para pseudo-elementos de "chinchetas" si se desea */
 }
 
-/* Simulación de chincheta (opcional) */
 .paper-sheet-profile::before,
 .paper-sheet-profile::after {
   content: "";
   position: absolute;
   width: 12px;
   height: 12px;
-  background-color: #78909c;
+  background-color: var(--color-pin);
   border-radius: 50%;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-  border: 1px solid #546e7a;
+  border: 1px solid var(--color-pin-border);
 }
 
 .paper-sheet-profile::before {
@@ -96,11 +133,11 @@ body {
 }
 
 .stat-bar-bg {
-  background-color: #d7ccc8;
+  background-color: var(--color-border-light);
   border-radius: 2px;
   overflow: hidden;
   height: 1.25rem;
-  border: 1px solid #bcaaa4;
+  border: 1px solid var(--color-border-dark);
 }
 
 .stat-bar-fill {
@@ -111,42 +148,42 @@ body {
   padding-right: 0.5rem;
   font-size: 0.75rem;
   line-height: 1.25rem;
-  color: #fffdf5;
+  color: var(--color-paper-light);
   font-weight: 600;
 }
 
 .stat-bar-strength {
-  background-color: #a1887f;
+  background-color: var(--color-stat-strength);
 }
 
 .stat-bar-agility {
-  background-color: #81c784;
+  background-color: var(--color-stat-agility);
 }
 
 .stat-bar-intellect {
-  background-color: #7986cb;
+  background-color: var(--color-stat-intellect);
 }
 
 .stat-bar-magic {
-  background-color: #ba68c8;
+  background-color: var(--color-stat-magic);
 }
 
 .stat-bar-charm {
-  background-color: #f06292;
+  background-color: var(--color-stat-charm);
 }
 
 .article-content h2,
 .article-content h3 {
-  font-family: "Sorts Mill Goudy", serif;
-  color: #6d4c41;
-  border-bottom: 1px solid #d7ccc8;
+  font-family: var(--font-title);
+  color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-border-light);
   padding-bottom: 0.25rem;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
 
 .article-content strong {
-  color: #5d4037;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
@@ -157,50 +194,50 @@ body {
 }
 
 .article-content blockquote {
-  border-left: 3px solid #8d6e63;
+  border-left: 3px solid var(--color-accent);
   padding-left: 1rem;
   margin-left: 0;
   font-style: italic;
-  color: #756257;
+  color: var(--color-text-muted);
 }
 
 .article-content figure {
   margin: 1.5rem 0;
-  border: 1px solid #d7ccc8;
+  border: 1px solid var(--color-border-light);
   padding: 0.5rem;
-  background-color: #fdfbf7;
+  background-color: var(--color-paper-light);
 }
 
 .article-content figcaption {
   font-size: 0.9em;
   text-align: center;
-  color: #756257;
+  color: var(--color-text-muted);
   margin-top: 0.25rem;
 }
 
-.auth-btn {
+.btn-base {
   padding: 0.5rem 0.7rem;
   font-weight: 600;
-  background-color: #8d6e63;
-  color: white;
-  border-radius: 0.5rem;
-}
-
-.auth-btn:hover {
-  background-color: #6d4c41;
-}
-
-.primary-btn {
-  padding: 0.5rem 0.7rem;
-  font-weight: 600;
-  background-color: transparent;
-  color: #5d4037;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.3s;
 }
 
+.auth-btn {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.auth-btn:hover {
+  background-color: var(--color-secondary);
+}
+
+.primary-btn {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+
 .primary-btn:hover {
-  background-color: #5d4037;
+  background-color: var(--color-primary);
   color: #fff;
 }

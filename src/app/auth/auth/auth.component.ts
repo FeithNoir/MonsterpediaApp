@@ -56,7 +56,17 @@ export class AuthComponent {
           this.loading.set(false);
         },
         error: (err) => {
-          this.feedbackError.set(err.message);
+          let errorMessage = 'Ocurrió un error inesperado. Inténtalo de nuevo más tarde.';
+
+          if (err.status === 401 || err.message?.includes('Unauthorized') || err.message?.includes('credentials')) {
+            errorMessage = 'Credenciales inválidas. Por favor, verifica tu email y contraseña.';
+          } else if (err.message?.includes('network') || err.message?.includes('connection')) {
+            errorMessage = 'No se pudo conectar al servidor. Por favor, verifica tu conexión a internet.';
+          } else if (err.message) {
+            errorMessage = err.message; // Fallback to original message if it's more specific
+          }
+
+          this.feedbackError.set(errorMessage);
           this.loading.set(false);
         },
       });

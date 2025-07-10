@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IMonsterGirl, IStats } from '../../../../core/interfaces/monster-girl.interface';
+import { Component, inject } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import { IEntry } from '../../../../core/interfaces/entry.interface';
+import { AuthService } from '../../../../core/services/auth.service';
+import { IUser } from '../../../../core/interfaces/auth.interface';
 
 @Component({
   selector: 'pages-bulletin-board',
@@ -10,23 +12,25 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class BulletinBoardComponent {
   protected imgUrl: string = './lamia.jpg';
-  protected stats: IStats = {
-    strength: 75,
-    agility: 65,
-    intelligence: 70,
-    charm: 80,
-    magic: 60
-  }
-  protected mosterGirlData: IMonsterGirl = {
+  private authService = inject(AuthService);
+  private currentUser: IUser = this.authService.getCurrentUser()!;
+
+  protected mosterGirlData: IEntry = {
     id: uuidv4(),
-    name: 'Lamia Venenosa',
-    description: 'Lamia de los Valles Sombríos',
-    commonNames: ['Lamia Venenosa', 'Lamia obscura', 'Lamia de los Valles Sombríos'],
-    species: 'Serpenthia Escamadorada',
-    clasification: ['Humanoide Serpentina', 'Críptida Terrestre'],
-    alignment: 'Neutral Maligna (frecuente)',
-    threatLevel: 4,
-    longevity: '120-150 ciclos solares',
-    stats: this.stats,
+    title: 'Lamia',
+      name: 'Lamia',
+      description:
+        'Observaciones sobre la Lamia obscura y sus hábitos arcanos.',
+      commonNames: ['Naga Oscura', 'Serpiente Hechicera'],
+      species: 'Lamia',
+      clasification: ['Críptida', 'Reptiliana Mágica'],
+      alignment: 'Caótico Neutral',
+      threatLevel: 7,
+      longevity: 'Varios siglos',
+      images: [this.imgUrl],
+      content: '',
+      author: this.currentUser,
+      date: new Date(Date.now()),
+      tags: ['Lamia', 'Críptida', 'Magia Antigua', 'Serpiente'],
   }
 }
