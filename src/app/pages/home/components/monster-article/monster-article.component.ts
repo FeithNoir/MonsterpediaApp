@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
 import { IEntry } from '../../../../core/interfaces/entry.interface';
-import { AuthService } from '../../../../core/services/auth.service';
-import { IUser } from '../../../../core/interfaces/auth.interface';
+import { EntryService } from '../../../../core/services/entry.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'pages-monster-article',
@@ -13,81 +12,22 @@ import { IUser } from '../../../../core/interfaces/auth.interface';
   templateUrl: './monster-article.component.html',
   styleUrl: './monster-article.component.css',
 })
-export class MonsterArticleComponent implements OnInit {
-  private authService = inject(AuthService);
+export class MonsterArticleComponent implements OnInit, OnDestroy {
+  private entryService = inject(EntryService);
+  private entriesSubscription: Subscription | undefined;
 
-  protected imgUrl: string = './lamia.jpg';
-  private currentUser: IUser = this.authService.getCurrentUser()!;
   protected entry = signal<IEntry | null>(null);
-  private readonly lamiaArticleMarkdown: string = `
-# Estudio sobre la Lamia
-*Observaciones sobre la Lamia obscura y sus hábitos arcanos.*
 
-Las Lamias son criaturas de fábula y espanto, con torso femenino y cuerpo serpentiforme
-desde la cintura. Se deslizan con gracia venenosa entre ruinas olvidadas, selvas húmedas y
-criptas malditas, mezclando la belleza de lo humano con lo letal de lo ofidio.
-
-![Una Lamia en descanso.](URL_IMAGEN_AQUI_SI_ES_PARTE_DEL_ARTICULO)
-*Una Lamia en descanso.*
-
-## Origen y Denominación
-Su nombre proviene del mito griego de Lamia, una reina convertida en monstruo tras
-perder a sus hijos, asociada desde entonces a lo oculto y a la sed de conocimiento
-prohibido.
-
-## Hábitats Comunes
-*   **Templos Abandonados:** Lugares donde la magia residual abunda y las
-    sombras protegen.
-*   **Selvas Oscuras:** Su camuflaje natural y sigilo les permite dominar
-    estos entornos.
-*   **Criptas Subterráneas:** Preferidas por las lamias con inclinación
-    necromántica.
-
-Evitan terrenos helados y zonas excesivamente urbanizadas.
-
-## Comportamiento y Alimentación
-Astutas y solitarias, las lamias suelen ser cazadoras nocturnas. Su dieta incluye
-mamíferos medianos, pero también se rumorea que absorben energía vital de sus víctimas
-mediante encantamientos.
-
-## Atributos Relevantes
-*   **Lengua Bífida Sensora:** Detecta feromonas y magia latente.
-*   **Colmillos Venenosos:** Su mordida puede paralizar o inducir visiones.
-*   **Conocimiento Arcaico:** Muchas lamias estudian grimorios antiguos.
-*   **Hipnosis Visual:** Capaces de paralizar con la mirada.
-
----
-*Las observaciones aquí presentadas son fruto de estudios compilados y pueden presentar
-variaciones regionales. Se recomienda cautela al aproximarse a especímenes salvajes.*
-`;
-
-  ngOnInit(): void {
-    this.processAndLoadArticle();
+  async ngOnInit(): Promise<void> {
+    this.entriesSubscription = await this.entryService.getEntries().subscribe(resp => {
+      const randomIndex = Math.floor(Math.random() * resp.length);
+      this.entry.set(resp[randomIndex]);
+    });
   }
 
-  private processAndLoadArticle(): void {
-    let articleContent = this.lamiaArticleMarkdown.replace(
-      'URL_IMAGEN_AQUI_SI_ES_PARTE_DEL_ARTICULO',
-      this.imgUrl
-    );
-
-    this.entry.set({
-      id: uuidv4(),
-      title: 'Lamia',
-      name: 'Lamia',
-      description:
-        'Observaciones sobre la Lamia obscura y sus hábitos arcanos.',
-      commonNames: ['Naga Oscura', 'Serpiente Hechicera'],
-      species: 'Lamia',
-      clasification: ['Críptida', 'Reptiliana Mágica'],
-      alignment: 'Caótico Neutral',
-      threatLevel: 7,
-      longevity: 'Varios siglos',
-      images: [this.imgUrl],
-      content: articleContent,
-      author: this.currentUser,
-      date: new Date(Date.now()),
-      tags: ['Lamia', 'Críptida', 'Magia Antigua', 'Serpiente'],
-    });
+  ngOnDestroy(): void {
+    if (this.entriesSubscription) {
+      this.entriesSubscription.unsubscribe();
+    }
   }
 }

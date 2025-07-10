@@ -2,7 +2,6 @@ import { IUser } from "./auth.interface";
 
 export interface IEntry {
   id: string;
-  title: string;
   name: string;
   description: string;
   commonNames: string[];

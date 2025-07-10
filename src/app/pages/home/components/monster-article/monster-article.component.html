@@ -1,9 +1,9 @@
 @if (entry() != null) {
-  <article class="p-4 md:p-6 lg:p-8 bg-encyclopedia-bg text-encyclopedia-text">
+  <article class="p-4 md:p-6 lg:p-8 text-encyclopedia-text">
       <!-- Header con datos de la interfaz (fuera del Markdown) -->
       <header class="mb-6 text-center">
         <h1 class="font-title-main text-4xl md:text-5xl text-encyclopedia-title mb-2">
-          {{ entry()!.title }}
+          {{ entry()!.name }}
         </h1>
         <p class="text-sm text-encyclopedia-accent italic">{{ entry()!.description }}</p>
       </header>

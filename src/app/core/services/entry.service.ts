@@ -9,6 +9,13 @@ import { IEntry } from '../interfaces/entry.interface';
 export class EntryService {
   private firestore = inject(Firestore);
   private collectionRef = collection(this.firestore, 'entries');
+  private entries: IEntry[] = [];
+
+  constructor() {
+    this.getEntries().subscribe(entries => {
+      this.entries = entries;
+    });
+  }
 
   /**
    * Crear una nueva entrada
@@ -47,5 +54,16 @@ export class EntryService {
   deleteEntry(id: string): Promise<void> {
     const entryDoc = doc(this.firestore, `entries/${id}`);
     return deleteDoc(entryDoc);
+  }
+
+  /**
+   * Obtener una entrada aleatoria
+   */
+  getRandomEntry(): IEntry | undefined {
+    if (this.entries.length > 0) {
+      const randomIndex = Math.floor(Math.random() * this.entries.length);
+      return this.entries[randomIndex];
+    }
+    return undefined;
   }
 }

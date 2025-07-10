@@ -1,0 +1,26 @@
+.bulletin-board {
+  width: 100%;
+}
+
+.form-group > .title-label {
+  width: 20%;
+}
+
+.form-group > .title-input {
+  width: 80%;
+}
+
+.form-group > label {
+  font-weight: 600;
+}
+
+.form-group > label, .form-group > input, .form-group > textarea {
+  width: 100%;
+}
+
+.form-group > input, .form-group > textarea {
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-text-dark);
+  color: var(--color-paper-profile);
+}

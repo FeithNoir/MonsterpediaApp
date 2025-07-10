@@ -5,8 +5,7 @@ export const routes: Routes = [
   {
     path: 'main',
     title: 'Home',
-    loadComponent: () =>
-      import('./pages/layout/layout.component').then((c) => c.LayoutComponent),
+    loadComponent: () => import('./pages/layout/layout.component').then((c) => c.LayoutComponent),
     children: [
       {
         path: 'home',
@@ -27,16 +26,17 @@ export const routes: Routes = [
   {
     path: 'auth',
     title: 'Auth',
-    loadComponent: () =>
-      import('./auth/auth/auth.component').then((c) => c.AuthComponent),
+    loadComponent: () => import('./auth/auth/auth.component').then((c) => c.AuthComponent),
+  },
+  {
+    path: 'entry',
+    title: 'Entrada',
+    loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
   },
   {
     path: 'reset-password',
     title: 'Reset Password',
-    loadComponent: () =>
-      import('./auth/reset-password/reset-password.component').then(
-        (c) => c.ResetPasswordComponent
-      ),
+    loadComponent: () => import('./auth/reset-password/reset-password.component').then((c) => c.ResetPasswordComponent),
   },
   {
     path: '',

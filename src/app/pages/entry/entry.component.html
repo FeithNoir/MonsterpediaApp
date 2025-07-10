@@ -1,0 +1,75 @@
+<div class="bulletin-board">
+  <form class="entry-form flex flex-col paper-sheet-profile gap-2" [formGroup]="entryForm" (ngSubmit)="onSubmit()">
+    <div class="form-group flex">
+      <label for="name" class="title-label">Nombre:</label>
+      <input type="text" class="title-input" id="name" formControlName="name">
+    </div>
+
+    <div class="flex gap-4">
+      <div class="flex flex-col gap-1">
+        <div class="form-group">
+          <label for="description">Descripción:</label>
+          <textarea id="description" rows="4" formControlName="description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="commonNames">Nombres Comunes (separados por coma):</label>
+          <input type="text" id="commonNames" formControlName="commonNames">
+        </div>
+
+        <div class="form-group flex">
+          <label for="species">Especie:</label>
+          <input type="text" id="species" formControlName="species">
+        </div>
+
+        <div class="form-group flex">
+          <label for="clasification">Clasificación (separados por coma):</label>
+          <input type="text" id="clasification" formControlName="clasification">
+        </div>
+
+        <div class="form-group flex">
+          <label for="alignment">Alineamiento:</label>
+          <input type="text" id="alignment" formControlName="alignment">
+        </div>
+
+        <div class="form-group flex">
+          <label for="threatLevel">Nivel de Amenaza:</label>
+          <input type="number" id="threatLevel" formControlName="threatLevel">
+        </div>
+
+        <div class="form-group flex">
+          <label for="longevity">Longevidad:</label>
+          <input type="text" id="longevity" formControlName="longevity">
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between gap-1">
+        <div class="form-group">
+          <label for="content">Contenido:</label>
+          <textarea id="content" rows="8" formControlName="content"></textarea>
+        </div>
+
+        <div class="form-group">
+          <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;" (change)="onFileSelected($event)">
+          <button type="button" class="primary-btn px-3 py-1 rounded-sm w-fit mt-2" onclick="document.getElementById('imageUpload').click()">
+            Subir imágenes
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="tags">Etiquetas (separadas por coma):</label>
+          <input type="text" id="tags" formControlName="tags">
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full flex justify-center gap-4">
+      <button type="submit" class="auth-btn px-3 py-1 rounded-sm w-fit mt-2">Enviar Entrada</button>
+
+      <button (click)="goToUrl('main/home')" class="primary-btn px-3 py-1 rounded-sm w-fit mt-2">
+        volver
+      </button>
+    </div>
+  </form>
+</div>
+
