@@ -1,52 +1,40 @@
-<aside class="flex content-start lg:col-span-1 order-2 lg:order-1">
+<aside class="w-full lg:col-span-1 order-2 lg:order-1">
   @if (mosterGirlData()!) {
-    <div class="paper-sheet-profile sticky top-24">
-    <!-- Profile Image -->
-    <div class="relative profile-image-container flex justify-center">
-      <img [src]="imgUrl" alt="Lamia Perfil" class="w-36 h-36 md:w-44 md:h-44 rounded-md border-2 border-[#795548] shadow-lg object-cover" style="filter: sepia(0.3) contrast(0.9) brightness(0.95);">
+    <div class="bulletin-profile sticky top-24">
+      <!-- Profile Image -->
+      <div class="relative flex justify-center mb-4">
+        <img [src]="imgUrl" alt="{{ mosterGirlData()!.name }} Profile"
+             class="w-36 h-36 md:w-44 md:h-44 rounded-md border-2 border-primary shadow-lg object-cover"
+             style="filter: sepia(0.3) contrast(0.9) brightness(0.95);">
+      </div>
+
+      <!-- Basic Info -->
+      <div class="text-center mb-6">
+        <h2 class="font-['var(--font-family-title)'] text-primary text-3xl">
+          {{ mosterGirlData()!.name }}
+        </h2>
+        <p class="text-muted text-sm italic mt-1">{{ mosterGirlData()!.description }}</p>
+      </div>
+
+      <!-- Details List -->
+      <div class="mb-5">
+        <h3 class="font-['var(--font-family-title)'] text-secondary text-xl mb-2 border-b border-subtle pb-1">
+          Datos de Especie
+        </h3>
+        <ul class="space-y-2 text-sm text-main">
+          <li><span class="font-semibold">Especie:</span> {{ mosterGirlData()!.species }}</li>
+          <li><span class="font-semibold">Nombres comunes:</span> {{ mosterGirlData()!.commonNames?.join(', ') }}</li>
+          <li><span class="font-semibold">Clasificación:</span> {{ mosterGirlData()!.clasification?.join(', ') }}</li>
+          <li><span class="font-semibold">Alineam.:</span> {{ mosterGirlData()!.alignment }}</li>
+          <li><span class="font-semibold">Amenaza:</span> {{ mosterGirlData()!.threatLevel }} / 5</li>
+          <li><span class="font-semibold">Longevidad:</span> {{ mosterGirlData()!.longevity }}</li>
+        </ul>
+      </div>
     </div>
-
-    <!-- Basic Info -->
-    <h2 class="font-title-section text-3xl text-center text-encyclopedia-title mb-1">
-      {{ mosterGirlData()!.name }}
-    </h2>
-    <p class="text-sm text-center text-encyclopedia-accent mb-5">{{ mosterGirlData()!.description }}</p>
-
-    <h3 class="font-semibold text-xl text-encyclopedia-title mb-2 border-b border-[#c8bca8] pb-1">Datos de Especie</h3>
-    <ul class="space-y-1.5 text-sm text-gray-700 mb-5">
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Especie:</span>
-        {{ mosterGirlData()!.species }}
-      </li>
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Nombres comunes:</span>
-         @for (item of mosterGirlData()!.commonNames; track $index) {
-          {{ item }} -
-         }
-        </li>
-      <li>
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Clasificación:</span>
-         @for (item of mosterGirlData()!.clasification; track $index) {
-          {{ item }} -
-         }
-        </li>
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Alineam.:</span>
-        {{ mosterGirlData()!.alignment }}
-      </li>
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Amenaza:</span>
-        {{ mosterGirlData()!.threatLevel }} / 5
-      </li>
-      <li>
-        <span class="font-semibold text-encyclopedia-title">Longevidad:</span>
-        {{ mosterGirlData()!.longevity }}
-      </li>
-    </ul>
-  </div>
   }
   @else {
-    <p>Cargando datos...</p>
+    <div class="text-center p-8">
+      <p class="text-muted text-lg">Cargando datos...</p>
+    </div>
   }
 </aside>

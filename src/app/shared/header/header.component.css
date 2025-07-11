@@ -1,0 +1,11 @@
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: var(--color-brand-secondary);
+}

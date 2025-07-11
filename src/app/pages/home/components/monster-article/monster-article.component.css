@@ -1,3 +1,42 @@
-markdown.markdown > h2 {
-  font-size: 1.5rem;
+/* :host se usa para asegurar que estos estilos solo se apliquen a este componente */
+:host ::ng-deep .article-content h2,
+:host ::ng-deep .article-content h3 {
+  font-family: var(--font-family-title);
+  color: var(--color-brand-secondary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: 0.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep .article-content h2 {
+  font-size: 1.875rem; /* 30px */
+}
+
+:host ::ng-deep .article-content h3 {
+  font-size: 1.5rem; /* 24px */
+}
+
+:host ::ng-deep .article-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+:host ::ng-deep .article-content ul {
+  list-style: square;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep .article-content strong {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+:host ::ng-deep .article-content blockquote {
+  border-left: 3px solid var(--color-brand-accent);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--color-text-muted);
 }
