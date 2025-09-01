@@ -18,7 +18,7 @@
 */
 
 :root {
-  /* 
+  /*
     COLOR PALETTE (Functional Naming)
     Purpose: Define colors based on their role in the UI.
   */
@@ -51,15 +51,15 @@
   --color-stat-magic: #ba68c8;
   --color-stat-charm: #f06292;
 
-  /* 
+  /*
     FONT FAMILIES
   */
   --font-family-body: "Crimson Text", serif;
   --font-family-title: "Sorts Mill Goudy", serif;
 }
 
-/* 
-  GLOBAL IMPORTS 
+/*
+  GLOBAL IMPORTS
 */
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
@@ -87,6 +87,7 @@ body {
 
 /* Text Colors */
 .text-main { color: var(--color-text-main); }
+.text-surface { color: var(--color-bg-surface); }
 .text-muted { color: var(--color-text-muted); }
 .text-primary { color: var(--color-brand-primary); }
 .text-on-primary { color: var(--color-text-on-primary); }
