@@ -1,0 +1,95 @@
+<div class="profile-container">
+    <div class="profile-content">
+        <!-- Decorative bottom pins -->
+        <div class="bottom-pins"></div>
+
+        <h1 class="profile-title">Perfil de Usuario</h1>
+
+        @if (currentUser()) {
+        <!-- User Information Section -->
+        <div class="profile-section">
+            <h2 class="section-title">Información de la Cuenta</h2>
+
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ currentUser()!.email }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Estado de Verificación:</span>
+                <span class="info-value" [class.verified]="currentUser()!.emailVerified"
+                    [class.not-verified]="!currentUser()!.emailVerified">
+                    @if (currentUser()!.emailVerified) {
+                    <i class="pi pi-check-circle"></i> Verificado
+                    } @else {
+                    <i class="pi pi-exclamation-circle"></i> No Verificado
+                    }
+                </span>
+            </div>
+
+            @if (!currentUser()!.emailVerified) {
+            <button (click)="sendVerificationEmail()" [disabled]="loading()" class="profile-btn-secondary">
+                <i class="pi pi-envelope"></i>
+                Enviar Email de Verificación
+            </button>
+            }
+        </div>
+
+        <!-- Edit Profile Section -->
+        <div class="profile-section">
+            <h2 class="section-title">Editar Perfil</h2>
+
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="profile-form">
+                <div class="form-group">
+                    <label for="displayName" class="profile-label">Nombre para Mostrar:</label>
+                    <input type="text" id="displayName" formControlName="displayName" class="profile-input"
+                        placeholder="Tu nombre">
+                </div>
+
+                <div class="form-group">
+                    <label for="photoURL" class="profile-label">URL de Foto de Perfil:</label>
+                    <input type="url" id="photoURL" formControlName="photoURL" class="profile-input"
+                        placeholder="https://ejemplo.com/foto.jpg">
+                </div>
+
+                @if (currentUser()!.photoURL) {
+                <div class="photo-preview">
+                    <img [src]="currentUser()!.photoURL" alt="Foto de perfil" class="profile-photo">
+                </div>
+                }
+
+                <button type="submit" [disabled]="loading() || !profileForm.valid" class="profile-btn-primary">
+                    <i class="pi pi-save"></i>
+                    {{ loading() ? 'Guardando...' : 'Guardar Cambios' }}
+                </button>
+            </form>
+        </div>
+
+        <!-- Feedback Messages -->
+        @if (feedbackMessage()) {
+        <div class="profile-feedback profile-feedback-success">
+            {{ feedbackMessage() }}
+        </div>
+        }
+
+        @if (feedbackError()) {
+        <div class="profile-feedback profile-feedback-error">
+            {{ feedbackError() }}
+        </div>
+        }
+
+        <!-- Actions Section -->
+        <div class="profile-actions">
+            <button (click)="goToDashboard()" class="profile-btn-secondary">
+                <i class="pi pi-arrow-left"></i>
+                Volver al Dashboard
+            </button>
+
+            <button (click)="logout()" class="profile-btn-danger">
+                <i class="pi pi-sign-out"></i>
+                Cerrar Sesión
+            </button>
+        </div>
+        }
+    </div>
+</div>

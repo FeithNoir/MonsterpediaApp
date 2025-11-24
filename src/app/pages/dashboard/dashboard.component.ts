@@ -42,6 +42,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl(`/entry/${id}`);
   }
 
+  protected goToProfile(): void {
+    this.router.navigateByUrl('/profile');
+  }
+
   protected deleteEntry(id: string): void {
     if (confirm('¿Estás seguro de que deseas eliminar esta entrada?')) {
       this.entryService.deleteEntry(id).then(() => {

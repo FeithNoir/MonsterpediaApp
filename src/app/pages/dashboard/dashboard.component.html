@@ -11,6 +11,10 @@
                 <i class="pi pi-plus"></i>
                 Crear Nueva Entrada
             </button>
+            <button (click)="goToProfile()" class="dashboard-btn-secondary">
+                <i class="pi pi-user"></i>
+                Mi Perfil
+            </button>
         </div>
 
         <!-- Loading State -->
@@ -72,7 +76,7 @@
                             </span>
                         </td>
                         <td>{{ formatDate(entry.date) }}</td>
-                        <td>{{ entry.author?.displayName || entry.author?.email || 'Anónimo' }}</td>
+                        <td>{{ entry.author.displayName || entry.author.email || 'Anónimo' }}</td>
                         <td class="actions-cell">
                             <button (click)="editEntry(entry.id)" class="action-btn edit-btn" title="Editar">
                                 <i class="pi pi-pencil"></i>
