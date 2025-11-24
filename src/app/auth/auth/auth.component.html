@@ -1,57 +1,86 @@
-<div class="bulletin-board max-w-md mx-auto p-6 sm:p-8 paper-sheet-profile rounded-lg py-8 px-4 sm:px-6 lg:px-8">
-  <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">
-    {{ mode() === 'login' ? 'Iniciar sesión' : 'Registrarse' }}
-  </h2>
+<div class="flex items-center justify-center min-h-screen p-4">
+  <div class="auth-container max-w-md w-full rounded-lg p-8">
+    <!-- Decorative bottom pins -->
+    <div class="bottom-pins"></div>
+    
+    <h2 class="auth-title">
+      {{ mode() === 'login' ? 'Iniciar sesión' : 'Registrarse' }}
+    </h2>
 
-  <form (ngSubmit)="submit()" class="flex flex-col space-y-6">
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1 text-encyclopedia-accent">Email</label>
-      <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-encyclopedia-accent focus:border-encyclopedia-accent sm:text-sm" required [(ngModel)]="email"
-        name="email" />
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1 text-encyclopedia-accent">Contraseña</label>
-      <p-inputgroup>
-        <input pInputText [type]="isViewingPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="Contraseña" [ngModelOptions]="{standalone: true}" class="w-full px-4 py-2 border border-gray-300 rounded-l-md shadow-sm focus:ring-encyclopedia-accent focus:border-encyclopedia-accent sm:text-sm" />
-        <p-inputgroup-addon>
-          <i [ngClass]=" isViewingPassword ? 'pi pi-eye-slash' : 'pi pi-eye' " class="h-full px-4 py-2 border border-gray-300 rounded-r-md bg-gray-50 text-gray-500 cursor-pointer flex items-center justify-center" (click)="toggleIcon()"></i>
-        </p-inputgroup-addon>
-      </p-inputgroup>
-    </div>
-
-    @if (mode() === 'register') {
+    <form (ngSubmit)="submit()" class="auth-form">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1 text-encyclopedia-accent">Nombre a mostrar</label>
-        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-encyclopedia-accent focus:border-encyclopedia-accent sm:text-sm" [(ngModel)]="displayName"
-          name="displayName" />
+        <label class="auth-label">Email</label>
+        <input 
+          type="email" 
+          class="auth-input" 
+          required 
+          [(ngModel)]="email"
+          name="email"
+          placeholder="tu@email.com" />
+      </div>
+
+      <div>
+        <label class="auth-label">Contraseña</label>
+        <p-inputgroup>
+          <div class="password-group w-full">
+            <input 
+              pInputText 
+              [type]="isViewingPassword ? 'text' : 'password'" 
+              [(ngModel)]="password" 
+              placeholder="Contraseña" 
+              [ngModelOptions]="{standalone: true}" 
+              class="auth-input password-input" />
+            <div class="password-toggle" (click)="toggleIcon()">
+              <i [ngClass]="isViewingPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </div>
+          </div>
+        </p-inputgroup>
+      </div>
+
+      @if (mode() === 'register') {
+        <div>
+          <label class="auth-label">Nombre a mostrar</label>
+          <input 
+            type="text" 
+            class="auth-input" 
+            [(ngModel)]="displayName"
+            name="displayName"
+            placeholder="Tu nombre" />
+        </div>
+      }
+
+      <button 
+        type="submit" 
+        [disabled]="loading()" 
+        class="auth-submit-btn">
+        {{ loading() ? 'Cargando...' : (mode() === 'login' ? 'Iniciar sesión' : 'Registrarse') }}
+      </button>
+    </form>
+
+    <div class="auth-actions">
+      <button 
+        (click)="toggleMode()" 
+        class="auth-secondary-btn">
+        {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
+      </button>
+
+      <button 
+        (click)="goToUrl('reset-password')" 
+        class="auth-secondary-btn">
+        ¿Olvidaste la contraseña?
+      </button>
+    </div>
+
+    @if (feedbackMessage()) {
+      <div class="auth-feedback auth-feedback-success">
+        {{ feedbackMessage() }}
       </div>
     }
 
-    <button type="submit" [disabled]="loading()" class="auth-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-encyclopedia-primary hover:bg-encyclopedia-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-encyclopedia-primary">
-      {{ loading() ? 'Cargando...' : (mode() === 'login' ? 'Iniciar sesión' : 'Registrarse') }}
-    </button>
-  </form>
-
-  <div class="mt-6 text-center flex flex-col space-y-4">
-    <button (click)="toggleMode()" class="primary-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-encyclopedia-primary bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-encyclopedia-primary">
-      {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
-    </button>
-
-    <button (click)="goToUrl('reset-password')" class="primary-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-encyclopedia-primary bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-encyclopedia-primary">
-      ¿Olvidaste la contraseña?
-    </button>
+    @if (feedbackError()) {
+      <div class="auth-feedback auth-feedback-error">
+        {{ feedbackError() }}
+      </div>
+    }
   </div>
-
-  @if (feedbackMessage()) {
-  <div class="mt-6 text-green-700 font-semibold text-center text-base">
-    {{ feedbackMessage() }}
-  </div>
-  }
-
-  @if (feedbackError()) {
-  <div class="mt-6 text-red-700 font-semibold text-center text-base">
-    {{ feedbackError() }}
-  </div>
-  }
 </div>
