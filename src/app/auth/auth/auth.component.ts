@@ -17,6 +17,15 @@ export class AuthComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  constructor() {
+    // If user is already authenticated, redirect to dashboard
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      if (isAuth) {
+        this.router.navigateByUrl('/dashboard');
+      }
+    });
+  }
+
 
   // Mode signal: 'login' o 'register'
   protected mode = signal<'login' | 'register'>('login');

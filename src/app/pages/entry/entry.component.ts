@@ -47,6 +47,12 @@ export class EntryComponent implements OnInit {
         this.entryId = id;
         this.isEditMode.set(true);
         this.loadEntry(id);
+      } else {
+        // Reset for new entry
+        this.entryId = null;
+        this.isEditMode.set(false);
+        this.entryForm.reset();
+        this.selectedImages = [];
       }
     });
   }
