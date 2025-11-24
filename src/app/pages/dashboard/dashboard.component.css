@@ -97,6 +97,23 @@
     gap: 1rem;
 }
 
+/* Loading state */
+.dashboard-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: var(--color-brand-primary);
+    gap: 1rem;
+}
+
+.dashboard-loading p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
 /* Empty state */
 .dashboard-empty {
     display: flex;

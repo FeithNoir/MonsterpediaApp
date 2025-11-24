@@ -1,0 +1,38 @@
+@if (isAuthenticated()) {
+<aside class="sidebar">
+    <!-- Decorative pins -->
+    <div class="sidebar-pins"></div>
+
+    <!-- Header -->
+    <div class="sidebar-header">
+        <h2 class="sidebar-title">Monsterpedia</h2>
+        @if (currentUser()) {
+        <p class="sidebar-user">{{ currentUser().displayName || currentUser().email }}</p>
+        }
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+        <a routerLink="/dashboard" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <a routerLink="/entry" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-plus-circle"></i>
+            <span>Nueva Entrada</span>
+        </a>
+        <a routerLink="/profile" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-user"></i>
+            <span>Mi Perfil</span>
+        </a>
+    </nav>
+
+    <!-- Logout Button -->
+    <div class="sidebar-footer">
+        <button (click)="logout()" class="sidebar-logout">
+            <i class="pi pi-sign-out"></i>
+            <span>Cerrar Sesión</span>
+        </button>
+    </div>
+</aside>
+}

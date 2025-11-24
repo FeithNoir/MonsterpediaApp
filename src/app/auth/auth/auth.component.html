@@ -17,10 +17,10 @@
         <label class="auth-label">Contraseña</label>
         <p-inputgroup>
           <div class="password-group w-full">
-            <input pInputText [type]="isViewingPassword ? 'text' : 'password'" [(ngModel)]="password"
-              placeholder="Contraseña" [ngModelOptions]="{standalone: true}" class="auth-input password-input" />
+            <input pInputText [type]="passwordType()" [(ngModel)]="password" placeholder="Contraseña"
+              [ngModelOptions]="{standalone: true}" class="auth-input password-input" />
             <div class="password-toggle" (click)="toggleIcon()">
-              <i [ngClass]="isViewingPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+              <i [ngClass]="passwordType() === 'text' ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </div>
           </div>
         </p-inputgroup>
@@ -52,12 +52,6 @@
     <div class="auth-feedback auth-feedback-success">
       {{ feedbackMessage() }}
     </div>
-
-    @if (mode() === 'login') {
-    <button (click)="continueToDashboard()" class="auth-submit-btn" style="margin-top: 1rem;">
-      Continuar al Dashboard
-    </button>
-    }
     }
 
     @if (feedbackError()) {

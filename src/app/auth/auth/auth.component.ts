@@ -25,7 +25,7 @@ export class AuthComponent {
   protected email = signal('');
   protected password = signal('');
   protected displayName = signal('');
-  protected isViewingPassword: boolean = false;
+  protected passwordType = signal('password');
 
   // Feedback
   protected feedbackMessage = signal<string | null>(null);
@@ -52,55 +52,70 @@ export class AuthComponent {
       this.authService.login(credentials).subscribe({
         next: (res) => {
           this.feedbackMessage.set(res.message);
-          // Don't navigate automatically - let user click "Continue" button
-          this.loading.set(false);
+          // Auto-navigate after a short delay to show success message
+          setTimeout(() => {
+            this.router.navigateByUrl('/dashboard');
+          }, 1000);
         },
         error: (err) => {
           let errorMessage = 'Ocurrió un error inesperado. Inténtalo de nuevo más tarde.';
 
-          if (err.status === 401 || err.message?.includes('Unauthorized') || err.message?.includes('credentials')) {
-            errorMessage = 'Credenciales inválidas. Por favor, verifica tu email y contraseña.';
-          } else if (err.message?.includes('network') || err.message?.includes('connection')) {
-            errorMessage = 'No se pudo conectar al servidor. Por favor, verifica tu conexión a internet.';
-          } else if (err.message) {
-            errorMessage = err.message; // Fallback to original message if it's more specific
+          if (err.code) {
+            switch (err.code) {
+              case 'auth/invalid-credential':
+                errorMessage = 'Credenciales inválidas. Verifica tu correo y contraseña.';
+                break;
+              case 'auth/user-not-found':
+                errorMessage = 'No existe una cuenta con este correo electrónico.';
+                break;
+              case 'auth/wrong-password':
+                errorMessage = 'Contraseña incorrecta.';
+                break;
+              case 'auth/too-many-requests':
+                errorMessage = 'Demasiados intentos fallidos. Inténtalo de nuevo más tarde.';
+                break;
+            }
           }
-
           this.feedbackError.set(errorMessage);
           this.loading.set(false);
-        },
+        }
       });
     } else {
-      const credentials: IRegisterCredentials = {
+      const userData: IRegisterCredentials = {
         email: this.email(),
         password: this.password(),
-        displayName: this.displayName(),
+        displayName: this.displayName() || undefined
       };
 
-      this.authService.register(credentials).subscribe({
+      this.authService.register(userData).subscribe({
         next: (res) => {
           this.feedbackMessage.set(res.message);
+          this.toggleMode();
           this.loading.set(false);
         },
         error: (err) => {
-          this.feedbackError.set(err.message);
+          let errorMessage = 'Error al registrar usuario.';
+          if (err.code === 'auth/email-already-in-use') {
+            errorMessage = 'El correo electrónico ya está en uso.';
+          } else if (err.code === 'auth/weak-password') {
+            errorMessage = 'La contraseña es demasiado débil.';
+          }
+          this.feedbackError.set(errorMessage);
           this.loading.set(false);
-        },
+        }
       });
     }
   }
 
-  protected continueToDashboard(): void {
-    this.router.navigateByUrl('dashboard');
-  }
-
-  protected toggleIcon(): void {
-    this.isViewingPassword = !this.isViewingPassword;
+  protected toggleIcon() {
+    if (this.passwordType() === 'password') {
+      this.passwordType.set('text');
+    } else {
+      this.passwordType.set('password');
+    }
   }
 
   protected goToUrl(url: string): void {
-    if (url != null && url.length > 0) {
-      this.router.navigateByUrl(url);
-    }
+    this.router.navigateByUrl(url);
   }
 }

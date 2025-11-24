@@ -23,6 +23,12 @@ export class ProfileComponent implements OnInit {
   protected feedbackError = signal<string | null>(null);
 
   ngOnInit(): void {
+    // Initialize form first
+    this.profileForm = this.fb.group({
+      displayName: ['', Validators.required],
+      photoURL: ['']
+    });
+
     // Subscribe to current user
     this.authService.currentUser$.subscribe(user => {
       this.currentUser.set(user);
@@ -32,12 +38,6 @@ export class ProfileComponent implements OnInit {
           photoURL: user.photoURL || ''
         });
       }
-    });
-
-    // Initialize form
-    this.profileForm = this.fb.group({
-      displayName: ['', Validators.required],
-      photoURL: ['']
     });
   }
 
@@ -76,18 +76,6 @@ export class ProfileComponent implements OnInit {
       error: (err) => {
         this.feedbackError.set(err.message || 'Error al enviar el email de verificación');
         this.loading.set(false);
-      }
-    });
-  }
-
-  protected logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        this.router.navigateByUrl('/auth');
-      },
-      error: (err) => {
-        console.error('Error al cerrar sesión:', err);
-        this.router.navigateByUrl('/auth');
       }
     });
   }
