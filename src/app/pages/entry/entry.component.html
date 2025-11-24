@@ -3,7 +3,7 @@
     <!-- Decorative bottom pins -->
     <div class="bottom-pins"></div>
 
-    <h1 class="entry-title">Nueva Entrada de Monstruo</h1>
+    <h1 class="entry-title">{{ isEditMode() ? 'Editar Entrada de Monstruo' : 'Nueva Entrada de Monstruo' }}</h1>
 
     <!-- Title Section -->
     <div class="form-group title-group">
@@ -77,26 +77,24 @@
     <!-- Image Upload Section -->
     <div class="form-group">
       <h2 class="entry-section-title">Imágenes</h2>
-      <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;"
+      <input #imageUpload type="file" id="imageUpload" multiple accept="image/*" style="display: none;"
         (change)="onFileSelected($event)">
       <button type="button" class="entry-upload-btn" (click)="imageUpload.click()">
         <i class="pi pi-upload"></i>
         Subir imágenes
       </button>
-      <input #imageUpload type="file" id="imageUploadRef" multiple accept="image/*" style="display: none;"
-        (change)="onFileSelected($event)">
     </div>
 
     <!-- Action Buttons -->
     <div class="entry-actions">
       <button type="submit" class="entry-btn-primary">
         <i class="pi pi-check"></i>
-        Enviar Entrada
+        {{ isEditMode() ? 'Actualizar Entrada' : 'Enviar Entrada' }}
       </button>
 
-      <button type="button" (click)="goToUrl('main/home')" class="entry-btn-secondary">
+      <button type="button" (click)="goToDashboard()" class="entry-btn-secondary">
         <i class="pi pi-arrow-left"></i>
-        Volver
+        Volver al Dashboard
       </button>
     </div>
   </form>

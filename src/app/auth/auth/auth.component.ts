@@ -9,7 +9,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'auth-login',
-  imports: [CommonModule, FormsModule, InputGroupModule, InputGroupAddonModule ],
+  imports: [CommonModule, FormsModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
@@ -52,7 +52,7 @@ export class AuthComponent {
       this.authService.login(credentials).subscribe({
         next: (res) => {
           this.feedbackMessage.set(res.message);
-          this.router.navigateByUrl('dashboard');
+          // Don't navigate automatically - let user click "Continue" button
           this.loading.set(false);
         },
         error: (err) => {
@@ -90,12 +90,16 @@ export class AuthComponent {
     }
   }
 
-  protected toggleIcon():void {
+  protected continueToDashboard(): void {
+    this.router.navigateByUrl('dashboard');
+  }
+
+  protected toggleIcon(): void {
     this.isViewingPassword = !this.isViewingPassword;
   }
 
-  protected goToUrl(url: string):void {
-    if(url != null && url.length > 0) {
+  protected goToUrl(url: string): void {
+    if (url != null && url.length > 0) {
       this.router.navigateByUrl(url);
     }
   }

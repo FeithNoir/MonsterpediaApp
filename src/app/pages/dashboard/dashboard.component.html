@@ -1,0 +1,91 @@
+<div class="dashboard-container">
+    <div class="dashboard-content">
+        <!-- Decorative bottom pins -->
+        <div class="bottom-pins"></div>
+
+        <h1 class="dashboard-title">Dashboard de Monstruos</h1>
+
+        <!-- Create New Entry Button -->
+        <div class="dashboard-header">
+            <button (click)="createNewEntry()" class="dashboard-btn-primary">
+                <i class="pi pi-plus"></i>
+                Crear Nueva Entrada
+            </button>
+        </div>
+
+        <!-- Loading State -->
+        @if (loading()) {
+        <div class="dashboard-loading">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+            <p>Cargando entradas...</p>
+        </div>
+        }
+
+        <!-- Empty State -->
+        @if (!loading() && entries().length === 0) {
+        <div class="dashboard-empty">
+            <i class="pi pi-inbox" style="font-size: 3rem; color: var(--color-text-muted);"></i>
+            <h3>No hay entradas todavía</h3>
+            <p>Crea tu primera entrada de monstruo para comenzar</p>
+        </div>
+        }
+
+        <!-- Entries List -->
+        @if (!loading() && entries().length > 0) {
+        <div class="entries-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Especie</th>
+                        <th>Clasificación</th>
+                        <th>Nivel de Amenaza</th>
+                        <th>Fecha</th>
+                        <th>Autor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (entry of entries(); track entry.id) {
+                    <tr>
+                        <td class="entry-name">{{ entry.name }}</td>
+                        <td>{{ entry.species || 'N/A' }}</td>
+                        <td>
+                            @if (entry.clasification && entry.clasification.length > 0) {
+                            <span class="classification-tags">
+                                @for (cls of entry.clasification.slice(0, 2); track cls) {
+                                <span class="tag">{{ cls }}</span>
+                                }
+                                @if (entry.clasification.length > 2) {
+                                <span class="tag-more">+{{ entry.clasification.length - 2 }}</span>
+                                }
+                            </span>
+                            } @else {
+                            <span>N/A</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="threat-level" [class.threat-high]="entry.threatLevel >= 7"
+                                [class.threat-medium]="entry.threatLevel >= 4 && entry.threatLevel < 7"
+                                [class.threat-low]="entry.threatLevel < 4">
+                                {{ entry.threatLevel }}/10
+                            </span>
+                        </td>
+                        <td>{{ formatDate(entry.date) }}</td>
+                        <td>{{ entry.author?.displayName || entry.author?.email || 'Anónimo' }}</td>
+                        <td class="actions-cell">
+                            <button (click)="editEntry(entry.id)" class="action-btn edit-btn" title="Editar">
+                                <i class="pi pi-pencil"></i>
+                            </button>
+                            <button (click)="deleteEntry(entry.id)" class="action-btn delete-btn" title="Eliminar">
+                                <i class="pi pi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
+    </div>
+</div>

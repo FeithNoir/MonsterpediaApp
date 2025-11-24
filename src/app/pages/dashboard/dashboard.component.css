@@ -1,0 +1,396 @@
+/* Dashboard Component - Vintage Encyclopedia Style */
+
+/* Main container */
+.dashboard-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dashboard-content {
+    max-width: 1400px;
+    width: 100%;
+    background: linear-gradient(to bottom,
+            var(--color-bg-surface-profile) 0%,
+            var(--color-bg-surface) 100%);
+    box-shadow:
+        0 4px 6px rgba(74, 59, 49, 0.1),
+        0 2px 4px rgba(74, 59, 49, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--color-border-default);
+    border-radius: 0.5rem;
+    padding: 2.5rem 2rem;
+    position: relative;
+    font-family: var(--font-family-body);
+}
+
+/* Decorative corner pins */
+.dashboard-content::before,
+.dashboard-content::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background-color: var(--color-ui-pin);
+    border: 2px solid var(--color-ui-pin-border);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.dashboard-content::before {
+    top: 16px;
+    left: 16px;
+}
+
+.dashboard-content::after {
+    top: 16px;
+    right: 16px;
+}
+
+/* Bottom pins */
+.bottom-pins {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    pointer-events: none;
+}
+
+.bottom-pins::before,
+.bottom-pins::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background-color: var(--color-ui-pin);
+    border: 2px solid var(--color-ui-pin-border);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-pins::before {
+    bottom: 16px;
+    left: 16px;
+}
+
+.bottom-pins::after {
+    bottom: 16px;
+    right: 16px;
+}
+
+/* Title */
+.dashboard-title {
+    font-family: var(--font-family-title);
+    color: var(--color-brand-primary);
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Header with create button */
+.dashboard-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border-subtle);
+}
+
+/* Primary button */
+.dashboard-btn-primary {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-brand-primary);
+    color: var(--color-text-on-primary);
+    border: 2px solid var(--color-brand-primary);
+    border-radius: 0.375rem;
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(74, 59, 49, 0.2);
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dashboard-btn-primary:hover {
+    background-color: var(--color-brand-secondary);
+    border-color: var(--color-brand-secondary);
+    box-shadow: 0 4px 6px rgba(74, 59, 49, 0.3);
+    transform: translateY(-1px);
+}
+
+.dashboard-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(74, 59, 49, 0.2);
+}
+
+/* Loading state */
+.dashboard-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: var(--color-text-muted);
+    gap: 1rem;
+}
+
+/* Empty state */
+.dashboard-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--color-text-muted);
+    gap: 1rem;
+}
+
+.dashboard-empty h3 {
+    color: var(--color-brand-primary);
+    font-family: var(--font-family-title);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.dashboard-empty p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Table styles */
+.entries-table {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+.entries-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.entries-table thead {
+    background-color: var(--color-border-subtle);
+    border-bottom: 2px solid var(--color-border-default);
+}
+
+.entries-table th {
+    padding: 0.875rem 0.75rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    font-family: var(--font-family-title);
+    letter-spacing: 0.3px;
+    border-right: 1px solid var(--color-border-default);
+}
+
+.entries-table th:last-child {
+    border-right: none;
+}
+
+.entries-table tbody tr {
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.entries-table tbody tr:hover {
+    background-color: rgba(215, 204, 200, 0.3);
+}
+
+.entries-table td {
+    padding: 0.875rem 0.75rem;
+    color: var(--color-text-main);
+    border-right: 1px solid var(--color-border-subtle);
+}
+
+.entries-table td:last-child {
+    border-right: none;
+}
+
+/* Entry name styling */
+.entry-name {
+    font-weight: 600;
+    color: var(--color-brand-primary);
+}
+
+/* Classification tags */
+.classification-tags {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    background-color: var(--color-border-subtle);
+    color: var(--color-text-main);
+}
+
+.tag-more {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+/* Threat level indicators */
+.threat-level {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.threat-low {
+    background-color: rgba(129, 199, 132, 0.2);
+    color: #2e7d32;
+}
+
+.threat-medium {
+    background-color: rgba(255, 183, 77, 0.2);
+    color: #f57c00;
+}
+
+.threat-high {
+    background-color: rgba(239, 83, 80, 0.2);
+    color: #c62828;
+}
+
+/* Action buttons */
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+}
+
+.edit-btn {
+    background-color: var(--color-brand-accent);
+    color: var(--color-text-on-primary);
+}
+
+.edit-btn:hover {
+    background-color: var(--color-brand-secondary);
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background-color: #ef5350;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c62828;
+    transform: scale(1.1);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .entries-table {
+        font-size: 0.875rem;
+    }
+
+    .entries-table th,
+    .entries-table td {
+        padding: 0.625rem 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.875rem;
+    }
+
+    .dashboard-header {
+        justify-content: center;
+    }
+
+    /* Stack table for mobile */
+    .entries-table table,
+    .entries-table thead,
+    .entries-table tbody,
+    .entries-table th,
+    .entries-table td,
+    .entries-table tr {
+        display: block;
+    }
+
+    .entries-table thead {
+        display: none;
+    }
+
+    .entries-table tr {
+        margin-bottom: 1rem;
+        border: 2px solid var(--color-border-default);
+        border-radius: 0.375rem;
+        padding: 0.75rem;
+    }
+
+    .entries-table td {
+        border: none;
+        padding: 0.5rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .entries-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--color-brand-primary);
+        margin-right: 1rem;
+    }
+
+    .actions-cell {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .dashboard-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+}

@@ -2,7 +2,7 @@
   <div class="auth-container max-w-md w-full rounded-lg p-8">
     <!-- Decorative bottom pins -->
     <div class="bottom-pins"></div>
-    
+
     <h2 class="auth-title">
       {{ mode() === 'login' ? 'Iniciar sesión' : 'Registrarse' }}
     </h2>
@@ -10,26 +10,15 @@
     <form (ngSubmit)="submit()" class="auth-form">
       <div>
         <label class="auth-label">Email</label>
-        <input 
-          type="email" 
-          class="auth-input" 
-          required 
-          [(ngModel)]="email"
-          name="email"
-          placeholder="tu@email.com" />
+        <input type="email" class="auth-input" required [(ngModel)]="email" name="email" placeholder="tu@email.com" />
       </div>
 
       <div>
         <label class="auth-label">Contraseña</label>
         <p-inputgroup>
           <div class="password-group w-full">
-            <input 
-              pInputText 
-              [type]="isViewingPassword ? 'text' : 'password'" 
-              [(ngModel)]="password" 
-              placeholder="Contraseña" 
-              [ngModelOptions]="{standalone: true}" 
-              class="auth-input password-input" />
+            <input pInputText [type]="isViewingPassword ? 'text' : 'password'" [(ngModel)]="password"
+              placeholder="Contraseña" [ngModelOptions]="{standalone: true}" class="auth-input password-input" />
             <div class="password-toggle" (click)="toggleIcon()">
               <i [ngClass]="isViewingPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </div>
@@ -38,49 +27,43 @@
       </div>
 
       @if (mode() === 'register') {
-        <div>
-          <label class="auth-label">Nombre a mostrar</label>
-          <input 
-            type="text" 
-            class="auth-input" 
-            [(ngModel)]="displayName"
-            name="displayName"
-            placeholder="Tu nombre" />
-        </div>
+      <div>
+        <label class="auth-label">Nombre a mostrar</label>
+        <input type="text" class="auth-input" [(ngModel)]="displayName" name="displayName" placeholder="Tu nombre" />
+      </div>
       }
 
-      <button 
-        type="submit" 
-        [disabled]="loading()" 
-        class="auth-submit-btn">
+      <button type="submit" [disabled]="loading()" class="auth-submit-btn">
         {{ loading() ? 'Cargando...' : (mode() === 'login' ? 'Iniciar sesión' : 'Registrarse') }}
       </button>
     </form>
 
     <div class="auth-actions">
-      <button 
-        (click)="toggleMode()" 
-        class="auth-secondary-btn">
+      <button (click)="toggleMode()" class="auth-secondary-btn">
         {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
       </button>
 
-      <button 
-        (click)="goToUrl('reset-password')" 
-        class="auth-secondary-btn">
+      <button (click)="goToUrl('reset-password')" class="auth-secondary-btn">
         ¿Olvidaste la contraseña?
       </button>
     </div>
 
     @if (feedbackMessage()) {
-      <div class="auth-feedback auth-feedback-success">
-        {{ feedbackMessage() }}
-      </div>
+    <div class="auth-feedback auth-feedback-success">
+      {{ feedbackMessage() }}
+    </div>
+
+    @if (mode() === 'login') {
+    <button (click)="continueToDashboard()" class="auth-submit-btn" style="margin-top: 1rem;">
+      Continuar al Dashboard
+    </button>
+    }
     }
 
     @if (feedbackError()) {
-      <div class="auth-feedback auth-feedback-error">
-        {{ feedbackError() }}
-      </div>
+    <div class="auth-feedback auth-feedback-error">
+      {{ feedbackError() }}
+    </div>
     }
   </div>
 </div>

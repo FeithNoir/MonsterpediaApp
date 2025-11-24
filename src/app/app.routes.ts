@@ -29,8 +29,18 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/auth/auth.component').then((c) => c.AuthComponent),
   },
   {
+    path: 'dashboard',
+    title: 'Dashboard',
+    loadComponent: () => import('./pages/dashboard/dashboard.component').then((c) => c.DashboardComponent),
+  },
+  {
     path: 'entry',
     title: 'Entrada',
+    loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
+  },
+  {
+    path: 'entry/:id',
+    title: 'Editar Entrada',
     loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
   },
   {
