@@ -1,0 +1,64 @@
+<div class="see-more-container">
+    <div class="see-more-header">
+        <h2 class="section-title">
+            <i class="pi pi-compass"></i>
+            Explora Más Monstruos
+        </h2>
+        <p class="section-subtitle">Descubre criaturas fascinantes de nuestra enciclopedia</p>
+    </div>
+
+    @if (isLoading()) {
+    <div class="loading-state">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Cargando artículos...</p>
+    </div>
+    } @else if (articles().length === 0) {
+    <div class="empty-state">
+        <i class="pi pi-inbox"></i>
+        <p>No hay artículos disponibles</p>
+    </div>
+    } @else {
+    <div class="articles-list">
+        @for (article of articles(); track article.id) {
+        <div class="article-item" (click)="viewArticle(article.id)">
+            <div class="article-number">{{ $index + 1 }}</div>
+
+            @if (article.images && article.images.length > 0) {
+            <div class="article-thumbnail">
+                <img [src]="article.images[0]" [alt]="article.name" />
+            </div>
+            } @else {
+            <div class="article-thumbnail article-thumbnail-placeholder">
+                <i class="pi pi-image"></i>
+            </div>
+            }
+
+            <div class="article-details">
+                <h3 class="article-name">{{ article.name }}</h3>
+                <div class="article-meta">
+                    <span class="article-species">
+                        <i class="pi pi-tag"></i>
+                        {{ article.species }}
+                    </span>
+                    <span class="article-threat" [ngClass]="getThreatLevelClass(article.threatLevel)">
+                        <i class="pi pi-exclamation-triangle"></i>
+                        Nivel {{ article.threatLevel }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-arrow">
+                <i class="pi pi-chevron-right"></i>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="see-more-footer">
+        <button class="view-all-button" (click)="viewAllArticles()">
+            <span>Ver Todos los Artículos</span>
+            <i class="pi pi-arrow-right"></i>
+        </button>
+    </div>
+    }
+</div>
