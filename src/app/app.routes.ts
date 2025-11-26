@@ -41,6 +41,12 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/profile/profile.component').then((c) => c.ProfileComponent),
         canActivate: [authGuard]
       },
+      {
+        path: 'wiki-articles',
+        title: 'Wiki de Monstruos',
+        loadComponent: () => import('./pages/wiki-articles/wiki-articles.component').then((c) => c.WikiArticlesComponent),
+        canActivate: [authGuard]
+      },
     ],
   },
   {

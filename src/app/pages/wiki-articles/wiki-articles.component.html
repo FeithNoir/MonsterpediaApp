@@ -1,0 +1,73 @@
+<div class="wiki-articles-container">
+  <div class="wiki-header">
+    <h1 class="wiki-title">Wiki de Monstruos</h1>
+    <p class="wiki-subtitle">Explora todos los artículos de la Monsterpedia</p>
+    
+    <div class="search-container">
+      <i class="pi pi-search search-icon"></i>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar por nombre, especie, descripción o etiquetas..."
+        (input)="onSearch($event)"
+      />
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <i class="pi pi-spin pi-spinner loading-spinner"></i>
+      <p>Cargando artículos...</p>
+    </div>
+  } @else if (filteredEntries().length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-inbox empty-icon"></i>
+      <h2>No se encontraron artículos</h2>
+      <p>{{ searchTerm() ? 'Intenta con otros términos de búsqueda' : 'Aún no hay artículos en la wiki' }}</p>
+    </div>
+  } @else {
+    <div class="articles-grid">
+      @for (entry of filteredEntries(); track entry.id) {
+        <article class="article-card" (click)="viewEntry(entry.id)">
+          @if (entry.images && entry.images.length > 0) {
+            <div class="article-image">
+              <img [src]="entry.images[0]" [alt]="entry.name" />
+            </div>
+          } @else {
+            <div class="article-image article-image-placeholder">
+              <i class="pi pi-image"></i>
+            </div>
+          }
+          
+          <div class="article-content">
+            <h3 class="article-name">{{ entry.name }}</h3>
+            
+            <div class="article-meta">
+              <span class="article-species">
+                <i class="pi pi-tag"></i>
+                {{ entry.species }}
+              </span>
+              <span class="article-threat" [ngClass]="getThreatLevelClass(entry.threatLevel)">
+                <i class="pi pi-exclamation-triangle"></i>
+                Nivel {{ entry.threatLevel }}
+              </span>
+            </div>
+            
+            <p class="article-description">{{ entry.description }}</p>
+            
+            @if (entry.tags && entry.tags.length > 0) {
+              <div class="article-tags">
+                @for (tag of entry.tags.slice(0, 3); track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+                @if (entry.tags.length > 3) {
+                  <span class="tag tag-more">+{{ entry.tags.length - 3 }}</span>
+                }
+              </div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>
