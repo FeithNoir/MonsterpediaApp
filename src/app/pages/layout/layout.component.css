@@ -1,24 +1,28 @@
 /* Layout Component - Adjusted for Sidebar */
 
 .layout-container {
-    margin-left: 260px;
+    margin-left: 0;
     min-height: 100vh;
     transition: margin-left 0.3s ease-in-out;
 }
 
+.layout-container.with-sidebar {
+    margin-left: 260px;
+}
+
 .content-wrapper {
-    /* Existing content wrapper styles */
+    padding: 0;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .layout-container {
+    .layout-container.with-sidebar {
         margin-left: 220px;
     }
 }
 
 @media (max-width: 640px) {
-    .layout-container {
+    .layout-container.with-sidebar {
         margin-left: 200px;
     }
 }

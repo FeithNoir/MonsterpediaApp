@@ -1,0 +1,63 @@
+<div class="article-of-the-day">
+    <div class="article-header">
+        <div class="header-icon">
+            <i class="pi pi-star-fill"></i>
+        </div>
+        <h2 class="article-title">Artículo del Día</h2>
+    </div>
+
+    @if (isLoading()) {
+    <div class="loading-state">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Cargando artículo...</p>
+    </div>
+    } @else if (article()) {
+    <div class="article-content" (click)="viewArticle()">
+        @if (article()!.images && article()!.images!.length > 0) {
+        <div class="article-image">
+            <img [src]="article()!.images![0]" [alt]="article()!.name" />
+            <div class="image-overlay"></div>
+        </div>
+        } @else {
+        <div class="article-image article-placeholder">
+            <i class="pi pi-image"></i>
+            <div class="image-overlay"></div>
+        </div>
+        }
+
+        <div class="article-info">
+            <h3 class="monster-name">{{ article()!.name }}</h3>
+
+            <div class="monster-meta">
+                <div class="meta-item">
+                    <i class="pi pi-tag"></i>
+                    <span>{{ article()!.species }}</span>
+                </div>
+                <div class="meta-item threat" [ngClass]="getThreatLevelClass(article()!.threatLevel)">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span>{{ getThreatLevelText(article()!.threatLevel) }}</span>
+                </div>
+            </div>
+
+            <p class="monster-description">{{ article()!.description }}</p>
+
+            @if (article()!.commonNames && article()!.commonNames.length > 0) {
+            <div class="common-names">
+                <strong>También conocido como:</strong>
+                <span>{{ article()!.commonNames.join(', ') }}</span>
+            </div>
+            }
+
+            <div class="read-more">
+                <span>Leer más</span>
+                <i class="pi pi-arrow-right"></i>
+            </div>
+        </div>
+    </div>
+    } @else {
+    <div class="empty-state">
+        <i class="pi pi-inbox"></i>
+        <p>No hay artículos disponibles</p>
+    </div>
+    }
+</div>
