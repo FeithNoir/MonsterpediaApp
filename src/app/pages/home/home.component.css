@@ -24,9 +24,25 @@
   margin-bottom: 2rem;
 }
 
+@media (max-width: 1200px) {
+  .home-container {
+    padding: 1.5rem;
+  }
+
+  .content-grid {
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .content-grid {
     grid-template-columns: 1fr;
+  }
+
+  .featured-section,
+  .content-grid,
+  .see-more-section {
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -39,5 +55,25 @@
   .content-grid,
   .see-more-section {
     margin-bottom: 2rem;
+  }
+
+  .content-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 0.75rem;
+  }
+
+  .featured-section,
+  .content-grid,
+  .see-more-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-grid {
+    gap: 1rem;
   }
 }

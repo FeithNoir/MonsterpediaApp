@@ -15,14 +15,20 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .layout-container.with-sidebar {
         margin-left: 220px;
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .layout-container.with-sidebar {
         margin-left: 200px;
+    }
+}
+
+@media (max-width: 640px) {
+    .layout-container.with-sidebar {
+        margin-left: 180px;
     }
 }
