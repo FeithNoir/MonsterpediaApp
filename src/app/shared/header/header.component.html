@@ -1,13 +1,14 @@
 <header class="bg-primary text-on-primary shadow-lg sticky top-0 z-50 border-b-4 border-secondary w-full">
   <div class="w-full max-w-7xl mx-auto px-4 flex justify-between items-stretch">
     <!-- Logo -->
-    <a href="index.html" class="font-['var(--font-family-title)'] text-4xl flex items-center py-2">Monsterpedia</a>
+    <a (click)="navigateToHome()"
+      class="font-['var(--font-family-title)'] text-4xl flex items-center py-2 cursor-pointer">Monsterpedia</a>
 
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex">
-      <a href="index.html" class="nav-link link-on-primary">Inicio</a>
-      <a href="#all-monsters" class="nav-link link-on-primary">Índice</a>
-      <a href="#submit" class="nav-link link-on-primary">Sugerir</a>
+      <a (click)="navigateToHome()" class="nav-link link-on-primary cursor-pointer">Inicio</a>
+      <a (click)="navigateToWiki()" class="nav-link link-on-primary cursor-pointer">Índice</a>
+      <a (click)="navigateToAuth()" class="nav-link link-on-primary cursor-pointer">Sugerir</a>
     </nav>
 
     <!-- Mobile Menu Button -->
@@ -21,9 +22,9 @@
   <!-- Mobile Menu -->
   <div [class.hidden]="!isMenuOpen" class="md:hidden bg-secondary w-full absolute top-full left-0">
     <nav class="flex flex-col items-center space-y-4 py-4">
-      <a href="index.html" class="link-on-primary">Inicio</a>
-      <a href="#all-monsters" class="link-on-primary">Índice de Chicas Monstruo</a>
-      <a href="#submit" class="link-on-primary">Sugerir Especie</a>
+      <a (click)="navigateToHome()" class="link-on-primary cursor-pointer">Inicio</a>
+      <a (click)="navigateToWiki()" class="link-on-primary cursor-pointer">Índice de Monstruos</a>
+      <a (click)="navigateToAuth()" class="link-on-primary cursor-pointer">Sugerir Especie</a>
     </nav>
   </div>
 </header>

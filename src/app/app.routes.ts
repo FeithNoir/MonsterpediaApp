@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
+import { UserRole } from './core/enums/user-role.enum';
 
 export const routes: Routes = [
   {
@@ -21,19 +23,19 @@ export const routes: Routes = [
         path: 'dashboard',
         title: 'Dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard.component').then((c) => c.DashboardComponent),
-        canActivate: [authGuard]
+        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
       },
       {
         path: 'entry',
         title: 'Entrada',
         loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
-        canActivate: [authGuard]
+        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
       },
       {
         path: 'entry/:id',
         title: 'Editar Entrada',
         loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
-        canActivate: [authGuard]
+        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
       },
       {
         path: 'profile',

@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, User, updateProfile, signOut, onAuthStateChanged, getIdToken, reload } from '@angular/fire/auth';
 import { BehaviorSubject, catchError, from, map, Observable, switchMap, throwError } from 'rxjs';
 import { IAuthResponse, ILoginCredentials, IRegisterCredentials, IUser } from '../interfaces/auth.interface';
+import { UserRole } from '../enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -266,12 +267,19 @@ export class AuthService {
    * Mapear usuario de Firebase a nuestro formato
    */
   private mapFirebaseUser(user: User): IUser {
+    // Asignar rol basado en verificación de email
+    // Por defecto: VISITOR si no verificado, USER si verificado
+    // Los ADMIN deben ser asignados manualmente en Firebase
+    const role = user.emailVerified ? UserRole.USER : UserRole.VISITOR;
+    
     return {
       id: user.uid,
       email: user.email,
       displayName: user.displayName,
       emailVerified: user.emailVerified,
       photoURL: user.photoURL,
+      role: role,
+      isActive: true, // Por defecto los usuarios están activos
     };
   }
 

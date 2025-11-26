@@ -1,62 +1,191 @@
 # Monsterpedia 📜👹
 
-¡Bienvenido a Monsterpedia! Una enciclopedia digital dedicada al fascinante y diverso mundo de las chicas monstruo. Este proyecto es un prototipo inicial desarrollado con HTML y Tailwind CSS, diseñado para mostrar un concepto visual y funcional de cómo podría ser una enciclopedia de este tipo.
+Welcome to **Monsterpedia**! A digital encyclopedia dedicated to the fascinating and diverse world of monster girls. This project is a full-stack web application built with Angular and Firebase, designed to create, manage, and explore a comprehensive database of monster species.
 
-La idea principal es presentar la información de cada chica monstruo de una manera que evoque una enciclopedia antigua o un tablón de anuncios de un investigador de lo oculto, con fichas de perfil y artículos detallados.
+The main concept is to present information about each monster girl in a way that evokes an ancient encyclopedia or an occult researcher's bulletin board, with detailed profile cards and informative articles.
 
-## ✨ Características del Prototipo
+## ✨ Features
 
-*   **Diseño Temático:** Estética inspirada en enciclopedias antiguas, utilizando una paleta de colores terrosos, fuentes serif y efectos visuales como "papel" y "tablones de anuncios".
-*   **Página Única:** Actualmente, toda la información (incluyendo el ejemplo de la Arpía) se presenta en un solo archivo `index.html` para facilitar la visualización del prototipo.
-*   **Ficha de Monstrua Detallada:**
-    *   Imagen de perfil con efecto visual.
-    *   Datos básicos de la especie (clasificación, alineamiento, amenaza, etc.).
-    *   Estadísticas representadas con barras de progreso.
-*   **Artículo Informativo:**
-    *   Secciones dedicadas a la etimología, hábitats, comportamiento, dieta y curiosidades.
-    *   Formato de texto que imita una hoja de papel de investigación.
-*   **Tecnologías:**
-    *   HTML5 semántico.
-    *   Tailwind CSS para un estilizado rápido y personalizable.
-    *   Google Fonts para tipografías específicas.
-*   **Sección de "Otros Especímenes":** Muestra cómo se podrían presentar otras entradas en el futuro.
+### User Authentication & Roles
+- **Three-tier permission system**: Visitor, User, and Admin
+- Email verification required for full access
+- Role-based access control for all features
+- Secure authentication with Firebase Auth
 
-## 🖼️ Vista Previa (Conceptual)
+### Content Management
+- **Create & Edit Articles**: Verified users can contribute monster entries
+- **Rich Article Editor**: Detailed information including:
+  - Species classification and common names
+  - Threat level assessment
+  - Physical characteristics and behavior
+  - Habitat and diet information
+  - Tags for easy categorization
+- **Image Upload**: Support for multiple images per entry
+- **Markdown Support**: Rich text formatting for article content
 
-*(Opcional: Si tienes capturas de pantalla, este sería un buen lugar para poner una o dos)*
+### User Interface
+- **Article of the Day**: Featured random monster on homepage
+- **See More Section**: Discover 10 random monsters
+- **Wiki Articles Page**: Browse all monsters with search functionality
+- **Responsive Design**: Optimized for desktop, tablet, and mobile
+- **Vintage Aesthetic**: Brown/beige color palette with serif fonts
+- **Consistent Design System**: Unified styling across all components
 
-Imagina un tablón de anuncios de madera oscura, con varios papeles y pergaminos clavados:
+### Navigation & Discovery
+- **Smart Search**: Filter monsters by name, species, description, or tags
+- **Interactive Cards**: Hover effects and smooth transitions
+- **Threat Level Indicators**: Color-coded danger ratings
+- **Quick Navigation**: Header shortcuts to key pages
 
-*   Un **cartel de "Se Busca" o perfil** detallando las características y estadísticas de una chica monstruo.
-*   Una **hoja de investigación** adjunta con observaciones detalladas sobre su comportamiento, hábitat y curiosidades.
+## 🛠️ Technology Stack
 
-## 🛠️ Cómo Usar este Prototipo
+### Frontend
+- **Angular 19**: Modern web framework with standalone components
+- **TypeScript**: Type-safe development
+- **RxJS**: Reactive programming for data streams
+- **TailwindCSS**: Utility-first CSS framework
+- **PrimeIcons**: Icon library
+- **ngx-markdown**: Markdown rendering support
 
-1.  Clona o descarga este repositorio.
-2.  Abre el archivo `index.html` en tu navegador web preferido.
-3.  ¡Explora el contenido de ejemplo de la Arpía!
+### Backend & Services
+- **Firebase Authentication**: User management and security
+- **Cloud Firestore**: NoSQL database for articles and user data
+- **Firebase Storage**: Image hosting and management
 
-## 🚀 Posibles Mejoras y Futuras Funcionalidades
+### Development Tools
+- **Angular CLI**: Project scaffolding and build tools
+- **ESLint**: Code quality and consistency
+- **Git**: Version control
 
-*   Separar cada chica monstruo en su propia página HTML o componente (si se migra a un framework).
-*   Implementar un sistema de navegación más robusto.
-*   Añadir funcionalidad de búsqueda y filtrado.
-*   Crear una base de datos o archivos JSON para almacenar la información de las monstruas.
-*   Permitir contribuciones de la comunidad.
-*   Optimizar para dispositivos móviles de forma más exhaustiva.
-*   ¡Añadir muchas más chicas monstruo!
+## 📋 Permission Matrix
 
+| Action | Visitor | User | Admin |
+|--------|---------|------|-------|
+| View articles | ✅ | ✅ | ✅ |
+| Access dashboard | ❌ | ✅ | ✅ |
+| Create articles | ❌ | ✅ | ✅ |
+| Edit own articles | ❌ | ✅ | ✅ |
+| Edit others' articles | ❌ | ❌ | ✅ |
+| Delete articles | ❌ | ❌ | ✅ |
+| Approve articles | ❌ | ❌ | ✅ |
+| Manage users | ❌ | ❌ | ✅ |
 
-## 👤 Autor
+## 🚀 Getting Started
 
-Este proyecto fue desarrollado por **Feith Noir**.
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- Firebase account
 
-*   **GitHub:** [![GitHub](https://img.shields.io/badge/GitHub-Feith%20Noir-181717?style=for-the-badge&logo=github)](https://github.com/feithnoir)
+### Installation
 
-## 📄 Licencia
+1. Clone the repository:
+```bash
+git clone https://github.com/FeithNoir/MonsterpediaApp.git
+cd MonsterpediaApp
+```
 
-El código puede ser utilizado como referencia o inspiración bajo una licencia de código abierto como [MIT](https://opensource.org/licenses/MIT).
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Configure Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Enable Authentication (Email/Password)
+   - Create a Firestore database
+   - Copy `src/environments/environment.template.ts` to `src/environments/environment.ts`
+   - Add your Firebase configuration
+
+4. Run the development server:
+```bash
+ng serve
+```
+
+5. Open your browser and navigate to `http://localhost:4200`
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── auth/                 # Authentication components
+│   ├── core/                 # Core services and guards
+│   │   ├── enums/           # User roles and other enums
+│   │   ├── guards/          # Route guards (auth, role)
+│   │   ├── interfaces/      # TypeScript interfaces
+│   │   └── services/        # Business logic services
+│   ├── pages/               # Page components
+│   │   ├── dashboard/       # User dashboard
+│   │   ├── entry/           # Article creation/editing
+│   │   ├── home/            # Homepage
+│   │   ├── layout/          # Main layout wrapper
+│   │   ├── profile/         # User profile
+│   │   └── wiki-articles/   # Article browsing
+│   └── shared/              # Shared components
+│       ├── article-of-the-day/
+│       ├── header/
+│       ├── hero/
+│       ├── see-more-articles/
+│       └── sidebar/
+└── styles.css               # Global styles and design tokens
+```
+
+## 🎨 Design System
+
+The application uses a vintage encyclopedia aesthetic with:
+- **Color Palette**: Brown and beige tones (`--color-brand-primary`, `--color-bg-surface`)
+- **Typography**: 
+  - Titles: Sorts Mill Goudy
+  - Body: Crimson Text
+- **Components**: Consistent border radius, shadows, and transitions
+- **Responsive**: Mobile-first approach with multiple breakpoints
+
+## 🔐 Security Notes
+
+> **Important**: This application implements client-side permission checks. For production use, you **must** implement Firebase Security Rules to validate permissions on the backend.
+
+Example Firestore Security Rules:
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /entries/{entry} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.token.email_verified;
+      allow update: if request.auth != null && 
+        (resource.data.author.id == request.auth.uid || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      allow delete: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
+```
+
+## 🚀 Future Enhancements
+
+- [ ] Article approval workflow for admins
+- [ ] User management dashboard for admins
+- [ ] Advanced filtering and sorting options
+- [ ] Favorites and bookmarks system
+- [ ] Comments and ratings on articles
+- [ ] Multi-language support
+- [ ] Dark mode theme
+- [ ] Export articles to PDF
+- [ ] Social sharing features
+- [ ] Activity feed and notifications
+
+## 👤 Author
+
+This project was developed by **Feith Noir**.
+
+- **GitHub**: [![GitHub](https://img.shields.io/badge/GitHub-Feith%20Noir-181717?style=for-the-badge&logo=github)](https://github.com/feithnoir)
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ---
 
-¡Gracias por visitar Monsterpedia! Esperamos que este prototipo te inspire.
+Thank you for visiting Monsterpedia! We hope this project inspires you to explore the fascinating world of monster girls. 🎭✨
