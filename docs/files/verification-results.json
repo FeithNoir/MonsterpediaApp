@@ -1,0 +1,41 @@
+{
+  "verifiedAt": "2026-11-07T15:59:30-05:00",
+  "timezone": "America/Bogota",
+  "cleanInstall": "npm ci passed",
+  "build": {
+    "status": "passed",
+    "initialRawKB": 871.5,
+    "estimatedTransferKB": 230.29,
+    "warning": "Existing 500 kB initial bundle warning remains; 1 MB error limit not exceeded."
+  },
+  "unit": {
+    "tests": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "rules": {
+    "tests": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "playwright": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "desktop": "1440x1050",
+    "mobile": "390x844",
+    "browserConsoleErrors": 0,
+    "pageErrors": 0,
+    "axe": "home/article, WCAG A/AA, desktop/mobile: zero violations"
+  },
+  "migration": "Prepared and syntax-checked; NEVER executed",
+  "productionWrites": false,
+  "deploy": false,
+  "merge": false,
+  "audit": {
+    "high": 0,
+    "critical": 0,
+    "moderate": 33,
+    "note": "Upstream administrative/tooling dependency advisories retained; no forced downgrade."
+  }
+}

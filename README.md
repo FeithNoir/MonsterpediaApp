@@ -1,203 +1,117 @@
-# Monsterpedia 📜👹
+# Monsterpedia
 
-Welcome to **Monsterpedia**! A digital encyclopedia dedicated to the fascinating and diverse world of monster girls. This project is a full-stack web application built with Angular and Firebase, designed to create, manage, and explore a comprehensive database of monster species.
+Una enciclopedia de criaturas fantásticas presentada como un cuaderno de historia innatural: una lámina, una ficha y las notas de un naturalista. Desarrollada por **Feith Noir**. [Licencia MIT](LICENSE).
 
-The main concept is to present information about each monster girl in a way that evokes an ancient encyclopedia or an occult researcher's bulletin board, with detailed profile cards and informative articles.
+## Qué funciona en esta rama
 
-## Documentation
+- Lectura pública en `/article/:id`, índice con búsqueda enlazable (`?q=`) y una criatura del día estable por fecha UTC.
+- Cuenta con correo/contraseña, recuperación de acceso, verificación de correo y nombre público editable.
+- Personas verificadas crean fichas y editan las propias; administración puede editar cualquier ficha y eliminar. La lectura no requiere cuenta.
+- Láminas reales en Storage (JPG, PNG, WebP o GIF; **5 MiB** por archivo, **4 láminas** por ficha).
+- Revisiones inmutables de cada edición y detección de conflictos. Las cinco revisiones más recientes se pueden leer en la ficha.
+- Un solo menú adaptable, pergamino claro y fuentes locales; sin barra lateral permanente ni tarjetas aleatorias duplicadas.
 
-The code and the feature list below do not always match. The audit records the difference.
+La aprobación editorial y la gestión de cuentas **no están implementadas**. `editors/{uid}` es una etiqueta opcional de rol, no permiso para modificar fichas ajenas.
 
-- [Architecture](docs/files/architecture.md) describes the routes, auth, and data model as they work now.
-- [Design](docs/files/design.md) describes the tokens and where the screens diverge from them.
-- [Audit](docs/files/audit.md) ranks the findings, with screenshots in [docs/screenshots](docs/screenshots).
-- [Improvement plan](docs/files/improvement-plan.md) is the phased follow-up. It has not been implemented.
-- [Environment setup](docs/files/environment-setup.md), [project structure](docs/files/project-structure.md), and the [refactoring guide](docs/files/refactoring-guide.md) are the earlier notes, moved and translated.
+## Desarrollo
 
-## ✨ Features
+Requisitos: **Node 24.12 o posterior de la línea 24**, npm y **Java 21** para los emuladores.
 
-### User Authentication & Roles
-- **Three-tier permission system**: Visitor, User, and Admin
-- Email verification required for full access
-- Role-based access control for all features
-- Secure authentication with Firebase Auth
-
-### Content Management
-- **Create & Edit Articles**: Verified users can contribute monster entries
-- **Rich Article Editor**: Detailed information including:
-  - Species classification and common names
-  - Threat level assessment
-  - Physical characteristics and behavior
-  - Habitat and diet information
-  - Tags for easy categorization
-- **Image Upload**: Support for multiple images per entry
-- **Markdown Support**: Rich text formatting for article content
-
-### User Interface
-- **Article of the Day**: Featured random monster on homepage
-- **See More Section**: Discover 10 random monsters
-- **Wiki Articles Page**: Browse all monsters with search functionality
-- **Responsive Design**: Optimized for desktop, tablet, and mobile
-- **Vintage Aesthetic**: Brown/beige color palette with serif fonts
-- **Consistent Design System**: Unified styling across all components
-
-### Navigation & Discovery
-- **Smart Search**: Filter monsters by name, species, description, or tags
-- **Interactive Cards**: Hover effects and smooth transitions
-- **Threat Level Indicators**: Color-coded danger ratings
-- **Quick Navigation**: Header shortcuts to key pages
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **Angular 19**: Modern web framework with standalone components
-- **TypeScript**: Type-safe development
-- **RxJS**: Reactive programming for data streams
-- **TailwindCSS**: Utility-first CSS framework
-- **PrimeIcons**: Icon library
-- **ngx-markdown**: Markdown rendering support
-
-### Backend & Services
-- **Firebase Authentication**: User management and security
-- **Cloud Firestore**: NoSQL database for articles and user data
-- **Firebase Storage**: Image hosting and management
-
-### Development Tools
-- **Angular CLI**: Project scaffolding and build tools
-- **ESLint**: Code quality and consistency
-- **Git**: Version control
-
-## 📋 Permission Matrix
-
-| Action | Visitor | User | Admin |
-|--------|---------|------|-------|
-| View articles | ✅ | ✅ | ✅ |
-| Access dashboard | ❌ | ✅ | ✅ |
-| Create articles | ❌ | ✅ | ✅ |
-| Edit own articles | ❌ | ✅ | ✅ |
-| Edit others' articles | ❌ | ❌ | ✅ |
-| Delete articles | ❌ | ❌ | ✅ |
-| Approve articles | ❌ | ❌ | ✅ |
-| Manage users | ❌ | ❌ | ✅ |
-
-The matrix is the intended policy. It is not what the client enforces. See the audit.
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Firebase account
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/FeithNoir/MonsterpediaApp.git
-cd MonsterpediaApp
+npm ci
+npm start
+npm run build
+npm test
 ```
 
-2. Install dependencies:
+Angular **21.2**, AngularFire **21.0** y Firebase JS **12.19**. AngularFire 21 declara Angular 21 y depende de Firebase 12; no se fuerza una combinación Angular 22/Firebase 13 sin soporte publicado. PrimeNG, Tailwind y las bibliotecas visuales duplicadas ya no son necesarias.
+
+Los archivos `environment.ts` y `environment.development.ts` incluyen la configuración **pública del cliente** de `mosterpedia`. No contienen una cuenta de servicio. Las reglas son el control de acceso, no esconder la API key. Nunca subas claves privadas, tokens ni credenciales administrativas.
+
+### Verificación local, sin tocar producción
+
 ```bash
-npm install
+npm run test:rules
+npx playwright install --with-deps chromium
+npm run test:e2e
 ```
 
-3. Configure Firebase:
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication (Email/Password)
-   - Create a Firestore database
-   - Copy `src/environments/environment.template.ts` to `src/environments/environment.ts`
-   - Add your Firebase configuration
+Los scripts usan `firebase emulators:exec --project mosterpedia` con puertos Auth **9099**, Firestore **8080** y Storage **9199**. Playwright compila exclusivamente `--configuration emulator`, ejecuta Chromium aislado a **1440×1050** y **390×844**, y crea sus cuentas y fichas ficticias solo en los emuladores. Ese servidor está en `http://127.0.0.1:4302`. Ningún parámetro de URL puede activar emuladores en el build de producción.
 
-4. Run the development server:
+Para explorar a mano, inicia en terminales separadas:
+
 ```bash
-ng serve
+npx firebase emulators:start --project mosterpedia --only auth,firestore,storage
+npm start -- --configuration emulator --host 127.0.0.1 --port 4302
 ```
 
-5. Open your browser and navigate to `http://localhost:4200`
+CI (`.github/workflows/ci.yml`) construye y ejecuta pruebas unitarias, reglas y flujos de navegador. **No despliega**.
 
-## 📁 Project Structure
+## Seguridad y datos
 
-```
-src/
-├── app/
-│   ├── auth/                 # Authentication components
-│   ├── core/                 # Core services and guards
-│   │   ├── enums/           # User roles and other enums
-│   │   ├── guards/          # Route guards (auth, role)
-│   │   ├── interfaces/      # TypeScript interfaces
-│   │   └── services/        # Business logic services
-│   ├── pages/               # Page components
-│   │   ├── dashboard/       # User dashboard
-│   │   ├── entry/           # Article creation/editing
-│   │   ├── home/            # Homepage
-│   │   ├── layout/          # Main layout wrapper
-│   │   ├── profile/         # User profile
-│   │   └── wiki-articles/   # Article browsing
-│   └── shared/              # Shared components
-│       ├── article-of-the-day/
-│       ├── header/
-│       ├── hero/
-│       ├── see-more-articles/
-│       └── sidebar/
-└── styles.css               # Global styles and design tokens
-```
+- `admins/{uid}` y `editors/{uid}` solo se gestionan desde una herramienta administrativa de confianza. Ningún cliente, ni siquiera uno administrador, puede escribir esos documentos.
+- Las entradas públicas contienen `authorId` y `displayName`, **nunca un objeto de usuario ni un correo de autor**. No escribas datos personales dentro del texto libre.
+- El esquema limita los textos, las listas (**5 cadenas de 80 caracteres** por lista), las imágenes y la amenaza (**entero de 0 a 10**).
+- Creación y edición requieren correo verificado. Autoría y fecha de creación no cambian. Cada edición debe guardar la versión anterior en la misma transacción.
+- Storage solo permite escribir al dueño verificado bajo `users/{uid}/entries/{entryId}/{fileId}`; las imágenes son públicas. Se valida MIME y tamaño; el análisis antivirus/contenido no está implementado.
+- Eliminar una ficha retira su lectura pública y la del historial, pero no borra físicamente subcolecciones ni objetos de Storage. La limpieza administrativa de huérfanos queda pendiente.
 
-## 🎨 Design System
+Las reglas son un **prototipo probado**, no una garantía absoluta de seguridad. Revisa `firestore.rules`, `storage.rules` y la matriz de ataques antes de abrir la aplicación a un público amplio.
 
-The application uses a vintage encyclopedia aesthetic with:
-- **Color Palette**: Brown and beige tones (`--color-brand-primary`, `--color-bg-surface`)
-- **Typography**: 
-  - Titles: Sorts Mill Goudy
-  - Body: Crimson Text
-- **Components**: Consistent border radius, shadows, and transitions
-- **Responsive**: Mobile-first approach with multiple breakpoints
+### Antes de cualquier despliegue: migrar la autoría antigua
 
-## 🔐 Security Notes
+**La implementación no se ha desplegado ni ha ejecutado esta migración.** Las reglas que estaban en vivo permitían editar y borrar fichas ajenas. Las entradas antiguas podrían contener correos públicamente legibles. No publiques el nuevo catálogo sobre documentos sin revisar.
 
-> **Important**: This application implements client-side permission checks. For production use, you **must** implement Firebase Security Rules to validate permissions on the backend.
+1. Obtén un respaldo administrativo y trabaja en una ventana sin ediciones concurrentes.
+2. En un equipo confiable con **Application Default Credentials** del Admin SDK (el login de Firebase CLI no las sustituye), revisa primero:
 
-Example Firestore Security Rules:
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /entries/{entry} {
-      allow read: if true;
-      allow create: if request.auth != null && request.auth.token.email_verified;
-      allow update: if request.auth != null && 
-        (resource.data.author.id == request.auth.uid || 
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
-      allow delete: if request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-  }
-}
+   ```bash
+   node scripts/migrate-author-privacy.mjs --project mosterpedia
+   ```
+
+3. El modo predeterminado **no escribe**. Revisa cada aviso de intervención manual: UID o fecha ausentes, listas demasiado largas o imágenes antiguas que necesitan subirse a Storage. No se imprimen valores privados.
+4. Solo después del respaldo y la aprobación, aplica y vuelve a revisar:
+
+   ```bash
+   node scripts/migrate-author-privacy.mjs --project mosterpedia --apply
+   node scripts/migrate-author-privacy.mjs --project mosterpedia
+   ```
+
+El script reemplaza el documento con un esquema permitido, elimina el usuario/correo incrustado, revisa snapshots del historial y conserva contenido válido. Usa una transacción y comprueba la fecha de la lectura para no pisar una edición concurrente. Es idempotente: la segunda revisión debe informar cero cambios y cero intervenciones pendientes. No publiques si queda algún documento sin migrar; revisa también el texto libre manualmente para evitar datos personales.
+
+### Paso manual: habilitar la administración de Hugo
+
+En **Firebase Console → proyecto `mosterpedia` → Authentication**, copia el **UID** de la cuenta de Hugo (no su correo). En Firestore `(default)`, crea el documento:
+
+```text
+admins/{HugoUid}
+  enabled: true
 ```
 
-## 🚀 Future Enhancements
+Su existencia concede el rol; `enabled` es informativo, no un interruptor. Para revocarlo, elimina el documento con una herramienta administrativa y vuelve a iniciar sesión para actualizar la interfaz. El correo debe estar verificado. No se usan custom claims. Para crear `editors/{uid}`, aplica el mismo procedimiento; no otorga edición sobre autoría ajena.
 
-- [ ] Article approval workflow for admins
-- [ ] User management dashboard for admins
-- [ ] Advanced filtering and sorting options
-- [ ] Favorites and bookmarks system
-- [ ] Comments and ratings on articles
-- [ ] Multi-language support
-- [ ] Dark mode theme
-- [ ] Export articles to PDF
-- [ ] Social sharing features
-- [ ] Activity feed and notifications
+### Comandos exactos de despliegue, SOLO después de revisión y merge
 
-## 👤 Author
+Verifica primero el proveedor Email/Password y el dominio de Auth autorizado, la base STANDARD `(default)` existente y la disponibilidad real del bucket `mosterpedia.firebasestorage.app`. La configuración del SDK por sí sola no prueba que Storage esté provisionado. Restringe la API key para los servicios y dominios que correspondan sin romper Auth.
 
-This project was developed by **Feith Noir**.
+```bash
+npm ci
+npm test
+npm run test:rules
+npm run build
+npx firebase deploy --project mosterpedia --only firestore:rules,firestore:indexes,storage
+npx firebase deploy --project mosterpedia --only hosting
+```
 
-- **GitHub**: [![GitHub](https://img.shields.io/badge/GitHub-Feith%20Noir-181717?style=for-the-badge&logo=github)](https://github.com/feithnoir)
+`.firebaserc` apunta a **mosterpedia**, con esa escritura exacta. Hosting publica `dist/monsterpedia-app/browser` y reescribe las rutas de la SPA a `index.html`. Los antiguos enlaces `/#/ruta` se convierten a rutas limpias al arrancar. No se ha hecho ningún deploy, merge ni escritura de datos de producción durante esta implementación.
 
-## 📄 License
+## Documentación y evidencia
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Plan y estado de las fases](docs/files/improvement-plan.md)
+- [Arquitectura actual](docs/files/architecture.md)
+- [Diseño y decisiones](docs/files/design.md)
+- [Verificación y límites conocidos](docs/files/verification.md)
+- [Auditoría original](docs/files/audit.md) — evidencia anterior a los cambios
+- [Capturas](docs/screenshots) — las nuevas empiezan por `after-`
 
----
-
-Thank you for visiting Monsterpedia! We hope this project inspires you to explore the fascinating world of monster girls. 🎭✨
+Pendientes: aprobación de publicaciones, paginación/búsqueda remota, SSR para vistas previas sociales, favoritos, comentarios moderados, i18n, modo oscuro y exportación PDF. El aviso de bundle inicial de 500 kB sigue visible; no se elevó el presupuesto para ocultarlo. Las dependencias administrativas/CLI conservan avisos moderados que se detallan en la verificación.
