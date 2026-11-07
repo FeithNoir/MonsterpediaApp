@@ -4,6 +4,16 @@ Welcome to **Monsterpedia**! A digital encyclopedia dedicated to the fascinating
 
 The main concept is to present information about each monster girl in a way that evokes an ancient encyclopedia or an occult researcher's bulletin board, with detailed profile cards and informative articles.
 
+## Documentation
+
+The code and the feature list below do not always match. The audit records the difference.
+
+- [Architecture](docs/files/architecture.md) describes the routes, auth, and data model as they work now.
+- [Design](docs/files/design.md) describes the tokens and where the screens diverge from them.
+- [Audit](docs/files/audit.md) ranks the findings, with screenshots in [docs/screenshots](docs/screenshots).
+- [Improvement plan](docs/files/improvement-plan.md) is the phased follow-up. It has not been implemented.
+- [Environment setup](docs/files/environment-setup.md), [project structure](docs/files/project-structure.md), and the [refactoring guide](docs/files/refactoring-guide.md) are the earlier notes, moved and translated.
+
 ## ✨ Features
 
 ### User Authentication & Roles
@@ -69,6 +79,8 @@ The main concept is to present information about each monster girl in a way that
 | Delete articles | ❌ | ❌ | ✅ |
 | Approve articles | ❌ | ❌ | ✅ |
 | Manage users | ❌ | ❌ | ✅ |
+
+The matrix is the intended policy. It is not what the client enforces. See the audit.
 
 ## 🚀 Getting Started
 
