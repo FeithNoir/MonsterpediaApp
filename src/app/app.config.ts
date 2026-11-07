@@ -1,25 +1,25 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
+import {
+  ApplicationConfig,
+  inject,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth } from '@angular/fire/auth';
+import { provideFirestore } from '@angular/fire/firestore';
+import { provideStorage } from '@angular/fire/storage';
+import { FIREBASE } from './core/firebase';
 import { routes } from './app.routes';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment.development';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './core/interceptors/auth.interceptor';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    provideHttpClient(withInterceptors([authInterceptor])),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideAnimationsAsync(),
+    provideZonelessChangeDetection(),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+    ),
+    provideFirebaseApp(() => inject(FIREBASE).app),
+    provideAuth(() => inject(FIREBASE).auth),
+    provideFirestore(() => inject(FIREBASE).db),
+    provideStorage(() => inject(FIREBASE).storage),
   ],
 };
