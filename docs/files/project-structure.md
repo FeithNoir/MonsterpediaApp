@@ -1,3 +1,5 @@
+> Historical audit-era note: the phase 1–3 implementation replaces parts of this structure. See [architecture.md](architecture.md) for the current source of truth.
+
 # Project structure
 
 Historical note, translated from the original Spanish `PROJECT_STRUCTURE.md`. For the system as it actually behaves, read [architecture.md](architecture.md). A few paths below were already wrong when this note was written: guards, interceptors, interfaces, and services live under `src/app/core/`, and the entry page is the editor, not a public article.

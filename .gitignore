@@ -41,9 +41,15 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Environments
-src/environments/environment.ts
-src/environments/environment.development.ts
+# Firebase web SDK config is public and committed; never commit service-account keys.
 
 # Environment variables
 .env
+
+# Local test/runtime artifacts
+.firebase/
+*-debug.log
+*-debug.*
+test-results/
+playwright-report/
+docs/refs/

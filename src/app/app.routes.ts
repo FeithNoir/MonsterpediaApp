@@ -1,68 +1,71 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { authGuard } from './core/guards/auth.guard';
-import { roleGuard } from './core/guards/role.guard';
-import { UserRole } from './core/enums/user-role.enum';
-
+import { authGuard, roleGuard, unsavedGuard } from './core/guards';
 export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: '',
-    loadComponent: () => import('./pages/layout/layout.component').then((c) => c.LayoutComponent),
-    children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-      },
-      {
-        path: 'home',
-        title: 'Home',
-        component: HomeComponent,
-      },
-      {
-        path: 'dashboard',
-        title: 'Dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard.component').then((c) => c.DashboardComponent),
-        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
-      },
-      {
-        path: 'entry',
-        title: 'Entrada',
-        loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
-        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
-      },
-      {
-        path: 'entry/:id',
-        title: 'Editar Entrada',
-        loadComponent: () => import('./pages/entry/entry.component').then((c) => c.EntryComponent),
-        canActivate: [authGuard, roleGuard([UserRole.USER, UserRole.ADMIN])]
-      },
-      {
-        path: 'profile',
-        title: 'Perfil',
-        loadComponent: () => import('./pages/profile/profile.component').then((c) => c.ProfileComponent),
-        canActivate: [authGuard]
-      },
-      {
-        path: 'wiki-articles',
-        title: 'Wiki de Monstruos',
-        loadComponent: () => import('./pages/wiki-articles/wiki-articles.component').then((c) => c.WikiArticlesComponent),
-        canActivate: [authGuard]
-      },
-    ],
+    path: 'home',
+    title: 'Monsterpedia · Cuaderno de campo',
+    loadComponent: () =>
+      import('./pages/catalog.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'wiki-articles',
+    title: 'Monsterpedia · Índice',
+    loadComponent: () =>
+      import('./pages/catalog.component').then((m) => m.IndexComponent),
+  },
+  {
+    path: 'article/:id',
+    title: 'Monsterpedia · Ficha',
+    loadComponent: () =>
+      import('./pages/article.component').then((m) => m.ArticleComponent),
   },
   {
     path: 'auth',
-    title: 'Auth',
-    loadComponent: () => import('./auth/auth/auth.component').then((c) => c.AuthComponent),
+    title: 'Monsterpedia · Entrar',
+    loadComponent: () =>
+      import('./pages/auth.component').then((m) => m.AuthComponent),
   },
   {
     path: 'reset-password',
-    title: 'Reset Password',
-    loadComponent: () => import('./auth/reset-password/reset-password.component').then((c) => c.ResetPasswordComponent),
+    title: 'Monsterpedia · Recuperar acceso',
+    loadComponent: () =>
+      import('./pages/auth.component').then((m) => m.ResetComponent),
+  },
+  {
+    path: 'profile',
+    title: 'Monsterpedia · Perfil',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/account.component').then((m) => m.ProfileComponent),
+  },
+  {
+    path: 'dashboard',
+    title: 'Monsterpedia · Cuaderno',
+    canActivate: [authGuard, roleGuard],
+    loadComponent: () =>
+      import('./pages/account.component').then((m) => m.DashboardComponent),
+  },
+  {
+    path: 'entry',
+    title: 'Monsterpedia · Nueva ficha',
+    canActivate: [authGuard, roleGuard],
+    canDeactivate: [unsavedGuard],
+    loadComponent: () =>
+      import('./pages/editor.component').then((m) => m.EditorComponent),
+  },
+  {
+    path: 'entry/:id',
+    title: 'Monsterpedia · Editar ficha',
+    canActivate: [authGuard, roleGuard],
+    canDeactivate: [unsavedGuard],
+    loadComponent: () =>
+      import('./pages/editor.component').then((m) => m.EditorComponent),
   },
   {
     path: '**',
-    redirectTo: 'home',
+    title: 'Monsterpedia · No encontrado',
+    loadComponent: () =>
+      import('./pages/catalog.component').then((m) => m.NotFoundComponent),
   },
 ];

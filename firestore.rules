@@ -1,0 +1,84 @@
+// Public encyclopedia entries contain only catalog content and authorId/displayName.
+// admins/{uid}, editors/{uid}: trusted-console-managed role markers; never client writable.
+// entries/{id}: strict schema; immutable author/createdAt, integer version, timestamps.
+// entries/{id}/revisions/{previousVersion}: immutable previous snapshot, editorId, createdAt.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function admin() { return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
+    function canEdit(d) { return verified() && (d.authorId == request.auth.uid || admin()); }
+    function text(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function shortText(v) { return v is string && v.size() <= 80; }
+    // Small bounded lists keep a maximal two-document revision transaction below the evaluation budget.
+    function strings(v) {
+      let n = v.size();
+      return v is list && n <= 5 && (n <= 0 || shortText(v[0])) &&
+        (n <= 1 || shortText(v[1])) &&
+        (n <= 2 || shortText(v[2])) &&
+        (n <= 3 || shortText(v[3])) &&
+        (n <= 4 || shortText(v[4]));
+    }
+    function imageUrl(v) {
+      return v is string && v.size() <= 2048 && v.matches('(https://firebasestorage[.]googleapis[.]com|http://127[.]0[.]0[.]1:9199)/v0/b/mosterpedia[.]firebasestorage[.]app/o/users%2F.*');
+    }
+    function images(v) {
+      let n = v.size();
+      return v is list && n <= 4 && (n <= 0 || imageUrl(v[0])) &&
+        (n <= 1 || imageUrl(v[1])) &&
+        (n <= 2 || imageUrl(v[2])) &&
+        (n <= 3 || imageUrl(v[3]));
+    }
+    function validEntry(d) { return d.keys().hasAll(['name', 'description', 'species', 'alignment', 'longevity', 'content', 'commonNames', 'clasification', 'tags', 'images', 'threatLevel', 'authorId', 'displayName', 'createdAt', 'updatedAt', 'version']) && d.keys().hasOnly(['name', 'description', 'species', 'alignment', 'longevity', 'content', 'commonNames', 'clasification', 'tags', 'images', 'threatLevel', 'authorId', 'displayName', 'createdAt', 'updatedAt', 'version']) && text(d.name, 1, 120) &&
+        text(d.description, 1, 1000) &&
+        text(d.species, 1, 120) &&
+        text(d.alignment, 1, 120) &&
+        text(d.longevity, 1, 120) &&
+        text(d.content, 1, 50000) &&
+        text(d.authorId, 1, 128) &&
+        text(d.displayName, 1, 80) && !d.displayName.matches('.*@.*') && !d.authorId.matches('.*@.*') &&
+        strings(d.tags) &&
+        strings(d.commonNames) &&
+        strings(d.clasification) &&
+        images(d.images) &&
+        d.threatLevel is int && d.threatLevel >= 0 && d.threatLevel <= 10 &&
+        d.createdAt is timestamp &&
+        d.updatedAt is timestamp &&
+        d.version is int && d.version >= 1; }
+    match /admins/{uid} { allow get: if signedIn() && request.auth.uid == uid; allow list, write: if false; }
+    match /editors/{uid} { allow get: if signedIn() && request.auth.uid == uid; allow list, write: if false; }
+    match /entries/{id} {
+      // Public reads explicitly requested. Migrate legacy PII BEFORE publishing this catalog.
+      allow read: if true;
+      allow create: if verified() && validEntry(request.resource.data)
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.version == 1;
+      allow update: if canEdit(resource.data) && validEntry(request.resource.data)
+        && request.resource.data.authorId == resource.data.authorId
+        && request.resource.data.displayName == resource.data.displayName
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.version == resource.data.version + 1
+        && getAfter(/databases/$(database)/documents/entries/$(id)/revisions/$(string(resource.data.version))).data.snapshot == resource.data
+        && getAfter(/databases/$(database)/documents/entries/$(id)/revisions/$(string(resource.data.version))).data.editorId == request.auth.uid
+        && getAfter(/databases/$(database)/documents/entries/$(id)/revisions/$(string(resource.data.version))).data.createdAt == request.time;
+      allow delete: if verified() && admin();
+      match /revisions/{rev} {
+        allow read: if exists(/databases/$(database)/documents/entries/$(id));
+        allow create: if exists(/databases/$(database)/documents/entries/$(id))
+          && canEdit(get(/databases/$(database)/documents/entries/$(id)).data)
+          && request.resource.data.keys().hasOnly(['snapshot','editorId','createdAt'])
+          && request.resource.data.snapshot == get(/databases/$(database)/documents/entries/$(id)).data
+          && request.resource.data.snapshot.keys().hasOnly(['name','description','species','alignment','longevity','content','commonNames','clasification','tags','images','threatLevel','authorId','displayName','createdAt','updatedAt','version'])
+          && rev == string(request.resource.data.snapshot.version)
+          && request.resource.data.editorId == request.auth.uid
+          && request.resource.data.createdAt == request.time
+          && getAfter(/databases/$(database)/documents/entries/$(id)).data.version == request.resource.data.snapshot.version + 1;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

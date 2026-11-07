@@ -1,3 +1,5 @@
+> Historical audit-era note: the phase 1–3 implementation replaces parts of this structure. See [architecture.md](architecture.md) for the current source of truth.
+
 # Component refactoring guide
 
 Historical note, translated from the original Spanish `REFACTORING_GUIDE.md`. It describes how screens were meant to be aligned with `styles.css` and Tailwind. Reset password still uses the old class names this guide says to remove. See [design.md](design.md).
