@@ -104,6 +104,20 @@ ng serve
 
 5. Open your browser and navigate to `http://localhost:4200`
 
+## Documentation
+
+Audit and planning docs (English) live under `docs/`:
+
+| Doc | Description |
+|---|---|
+| [`docs/files/architecture.md`](docs/files/architecture.md) | Current architecture (as audited) |
+| [`docs/files/design.md`](docs/files/design.md) | Design system notes and handcrafted direction |
+| [`docs/files/audit.md`](docs/files/audit.md) | UX / QA / design findings by severity |
+| [`docs/files/improvement-plan.md`](docs/files/improvement-plan.md) | Phased improvement plan (docs only — not implemented) |
+| [`docs/screenshots/`](docs/screenshots/) | Key screen captures from the audit |
+
+> Note: The 2026-11-19 audit ran against the local working tree, which includes an in-progress Firebase → Supabase migration. See `architecture.md` for the stack that was actually served.
+
 ## 📁 Project Structure
 
 ```
